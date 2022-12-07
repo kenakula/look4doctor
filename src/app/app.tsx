@@ -1,8 +1,12 @@
+import { ThemeStoreProvider } from './store';
+
 export const App = (): JSX.Element => {
   return (
-    <div className="App">
-      <header className="App-header">app</header>
-    </div>
+    <ThemeStoreProvider>
+      <div className="App">
+        <header className="App-header">app</header>
+      </div>
+    </ThemeStoreProvider>
   );
 };
 

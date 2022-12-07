@@ -20,9 +20,9 @@ export interface GlobalSetting {
 export interface User {
   id: string;
   name: string;
-  subscribed?: boolean;
   userImage?: string | Media;
-  role?: 'user' | 'admin';
+  role: 'user' | 'admin';
+  subscribed?: boolean;
   email: string;
   resetPasswordToken?: string;
   resetPasswordExpiration?: string;
