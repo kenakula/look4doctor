@@ -5,9 +5,12 @@ import GlobalSettings from './globals/global-settings';
 import MediaCollection from './collections/media.collection';
 
 export default buildConfig({
-  serverURL: 'http://localhost:3000',
+  serverURL: process.env.PAYLOAD_PUBLIC_BASE_DNS,
   admin: {
     user: UsersCollection.slug,
+  },
+  rateLimit: {
+    trustProxy: true,
   },
   globals: [GlobalSettings],
   collections: [UsersCollection, MediaCollection],
