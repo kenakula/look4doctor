@@ -1,3 +1,4 @@
+export * from './layout';
 export * from './home-page/home-page';
 export * from './login-page/login-page';
 export * from './signup-page/signup-page';
