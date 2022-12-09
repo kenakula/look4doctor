@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getSanityDataset } from '../assets';
+import { getSanityDataset } from 'app/shared/assets';
 
 export interface RootObject<T> {
   ms: number;

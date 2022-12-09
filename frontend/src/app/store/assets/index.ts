@@ -1,2 +1,2 @@
 export * from './axios';
-export * from './get-sanity-dataset';
+export * from './sanity-client';

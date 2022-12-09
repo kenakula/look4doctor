@@ -2,12 +2,12 @@ import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'author',
-  title: 'Author',
+  title: 'Авторы',
   type: 'document',
   fields: [
     defineField({
       name: 'name',
-      title: 'Name',
+      title: 'Имя',
       type: 'string',
     }),
     defineField({
@@ -21,7 +21,7 @@ export default defineType({
     }),
     defineField({
       name: 'image',
-      title: 'Image',
+      title: 'Аватарка',
       type: 'image',
       options: {
         hotspot: true,
