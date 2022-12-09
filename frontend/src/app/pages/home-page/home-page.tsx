@@ -1,10 +1,12 @@
-import { axiosInstance, getSanityDataset } from 'app/store/assets';
+import { client } from 'app/store/assets';
 import { useGetAllPostsQuery } from 'app/store/posts-api/posts.api';
 import { useEffect, useState } from 'react';
+import groq from 'groq';
 
 export const HomePage = (): JSX.Element => {
   const { data, isLoading } = useGetAllPostsQuery();
   const [title, setTitle] = useState('errored fetch');
+  const query = groq`*[_type=="post"]{title, author->{name}}`;
 
   useEffect(() => {
     if (data) {
@@ -13,10 +15,9 @@ export const HomePage = (): JSX.Element => {
   }, [data]);
 
   useEffect(() => {
-    const res = axiosInstance.get(getSanityDataset(), {
-      params: { query: '*[_type=="globalSettings"][0]{title}' },
+    client.fetch(query).then(res => {
+      console.log(res);
     });
-    console.log('res:', res);
   }, []);
 
   if (isLoading) {
