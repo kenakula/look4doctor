@@ -1,2 +1,2 @@
 export * from './axios';
-export * from './sanity-client';
+export * from './directus';

@@ -1,5 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
+import { useDispatch } from 'react-redux';
 import { authReducer } from './auth-slice/auth.slice';
 import { postsApi } from './posts-api/posts.api';
 
@@ -22,3 +23,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+export const useAppDispatch: () => AppDispatch = useDispatch;
