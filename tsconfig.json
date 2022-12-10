@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "src",
     "target": "es5",
     "lib": [
       "dom",
@@ -22,10 +22,8 @@
     "jsx": "react-jsx",
   },
   "paths": {
-    "@app": ["./frontend/src/app"],
-    "@assets": ["./frontend/src/assets"],
-    "@studio": ["./project12-backend"]
+    "@app": ["./app"],
+    "@assets": ["./assets"]
   },
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["frontend/node_modules", "project12-backend/node_modules"]
+  "include": ["**/*.ts", "**/*.tsx"]
 }
