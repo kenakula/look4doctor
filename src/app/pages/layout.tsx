@@ -1,6 +1,7 @@
+import { Box } from '@mui/material';
+import { Outlet } from 'react-router-dom';
 import { Header } from 'app/components';
 import { useAppSelector } from 'app/hooks';
-import { Outlet } from 'react-router-dom';
 
 export const Layout = (): JSX.Element => {
   const { authState } = useAppSelector(state => state.auth);
@@ -8,9 +9,9 @@ export const Layout = (): JSX.Element => {
   return (
     <>
       <Header />
-      <main className={authState ? 'succeed' : ''}>
+      <Box className={authState ? 'succeed' : ''}>
         <Outlet />
-      </main>
+      </Box>
     </>
   );
 };

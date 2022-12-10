@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormControlLabel } from '@mui/material';
 import { Controller } from 'react-hook-form';
 import { CustomCheckbox } from './assets';

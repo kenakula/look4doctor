@@ -1,6 +1,6 @@
-import { HomePage, Layout, PasswordForgotPage } from 'app/pages';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { HOME_PAGE, PASSWORD_FORGOT_PAGE } from './routes';
+import { HomePage, Layout, LoginPage, SignUpPage } from 'app/pages';
+import { HOME_PAGE, LOGIN_PAGE, SIGNUP_PAGE } from './routes';
 
 export const RouterComponent = (): JSX.Element => {
   return (
@@ -8,7 +8,8 @@ export const RouterComponent = (): JSX.Element => {
       <Routes>
         <Route element={<Layout />}>
           <Route path={HOME_PAGE} element={<HomePage />} />
-          <Route path={PASSWORD_FORGOT_PAGE} element={<PasswordForgotPage />} />
+          <Route path={LOGIN_PAGE} element={<LoginPage />} />
+          <Route path={SIGNUP_PAGE} element={<SignUpPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
