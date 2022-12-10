@@ -29,7 +29,6 @@ export const authSlice = createSlice({
       })
       .addCase(logIn.fulfilled, (state, action) => {
         state.authState = 'succeeded';
-        console.log('action.payload:', action.payload);
 
         if (action.payload && action.payload.refresh_token) {
           state.refreshToken = action.payload.refresh_token;
@@ -45,8 +44,7 @@ export const authSlice = createSlice({
         state.authError = null;
         state.authState = 'pending';
       })
-      .addCase(signUp.fulfilled, (state, { payload }) => {
-        console.log('payload:', payload);
+      .addCase(signUp.fulfilled, state => {
         state.authState = 'succeeded';
       })
       .addCase(signUp.rejected, (state, { payload }) => {
@@ -68,7 +66,6 @@ export const authSlice = createSlice({
       });
     // check auth
     builder.addCase(checkAuth.fulfilled, (state, { payload }) => {
-      console.log('payload:', payload);
       state.authError = null;
       state.authState = 'succeeded';
 

@@ -18,7 +18,7 @@ export const PasswordForgotPage = (): JSX.Element => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: FormModel) => {
+  const onSubmit = (data: FormModel): void => {
     dispatch(signUp(data));
   };
 

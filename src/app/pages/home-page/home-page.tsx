@@ -25,8 +25,7 @@ export const HomePage = (): JSX.Element => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: FormModel) => {
-    console.log('data:', data);
+  const onSubmit = (data: FormModel): void => {
     dispatch(logIn(data));
   };
 
