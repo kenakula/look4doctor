@@ -1,22 +1,13 @@
-import { Typography } from '@mui/material';
-import { useAppSelector } from './hooks';
+import { useEffect } from 'react';
 import { RouterComponent } from './router';
-import { ThemeStoreProvider } from './store';
+import { checkAuth, ThemeStoreProvider, useAppDispatch } from './store';
 
 export const App = (): JSX.Element => {
-  const { authState, authError } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
 
-  if (authState === 'pending') {
-    return <Typography variant="h1">Loading ...</Typography>;
-  }
-
-  if (authState === 'failed') {
-    return (
-      <Typography variant="h1" color="error">
-        Error: {authError}
-      </Typography>
-    );
-  }
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
 
   return (
     <div className="app">

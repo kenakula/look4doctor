@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { AuthCredentials, TransportError } from '@directus/sdk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { UserRoles } from 'app/shared/assets/user-roles';
