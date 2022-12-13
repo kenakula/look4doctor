@@ -3,7 +3,7 @@ import { AuthCredentials } from '@directus/sdk';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { InputComponent } from 'app/components';
-import { useAppDispatch, signUp } from 'app/store';
+import { useAppDispatch, signUp, checkAuth } from 'app/store';
 import { FormModel, schema } from './assets';
 
 export const SignUpPage = (): JSX.Element => {
@@ -19,7 +19,11 @@ export const SignUpPage = (): JSX.Element => {
   });
 
   const onSubmit = (data: FormModel): void => {
-    dispatch(signUp(data));
+    dispatch(signUp(data))
+      .unwrap()
+      .then(() => {
+        dispatch(checkAuth());
+      });
   };
 
   return (

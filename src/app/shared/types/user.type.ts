@@ -15,7 +15,7 @@ export interface IUser {
   status: string;
   role: string;
   token?: any;
-  last_access: Date;
+  last_access?: string | null;
   last_page?: any;
   provider: string;
   external_identifier?: any;

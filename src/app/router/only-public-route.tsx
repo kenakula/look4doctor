@@ -1,3 +1,4 @@
+import { useAppSelector } from 'app/hooks';
 import { Navigate } from 'react-router-dom';
 import { HOME_PAGE } from './routes';
 
@@ -6,7 +7,7 @@ interface Props {
 }
 
 export const OnlyPublicRoute = ({ children }: Props): JSX.Element => {
-  const authenticated = false;
+  const { authenticated } = useAppSelector(state => state.auth);
 
   if (authenticated) {
     return <Navigate to={HOME_PAGE} />;
