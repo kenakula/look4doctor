@@ -9,8 +9,10 @@ export const logIn = createAsyncThunk(
   'auth/login',
   async (data: AuthCredentials, thunkApi) => {
     try {
-      const res = await directus.auth.login(data);
-      return res;
+      await directus.auth.login(data);
+      const authRes = await directus.users.me.read();
+
+      return authRes as IUser;
     } catch (error) {
       if (error instanceof TransportError) {
         if (!error.response) {
@@ -29,12 +31,9 @@ export const signUp = createAsyncThunk(
     try {
       await directus.users.createOne({
         ...data,
-        first_name: 'dude',
         role: UserRoles.user,
       });
-      const loginRes = await directus.auth.login(data);
-
-      return loginRes;
+      await directus.auth.login(data);
     } catch (error) {
       if (error instanceof TransportError) {
         if (!error.response) {
@@ -49,9 +48,7 @@ export const signUp = createAsyncThunk(
 
 export const logOut = createAsyncThunk('auth/logOut', async (_, thunkApi) => {
   try {
-    const res = await directus.auth.logout();
-
-    return res;
+    await directus.auth.logout();
   } catch (error) {
     if (error instanceof TransportError) {
       if (!error.response) {
@@ -69,7 +66,7 @@ export const checkAuth = createAsyncThunk(
     try {
       const res = await directus.users.me.read();
 
-      return res as unknown as IUser;
+      return res as IUser;
     } catch (error) {
       if (error instanceof TransportError) {
         if (!error.response) {

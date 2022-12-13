@@ -10,11 +10,9 @@ export const App = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    <div className="app">
-      <ThemeStoreProvider>
-        <RouterComponent />
-      </ThemeStoreProvider>
-    </div>
+    <ThemeStoreProvider>
+      <RouterComponent />
+    </ThemeStoreProvider>
   );
 };
 
