@@ -3,17 +3,23 @@ import { IUser } from 'app/shared/types';
 import { checkAuth, logIn, logOut, signUp } from './auth.thunks';
 
 interface AuthState {
-  authState: 'idle' | 'pending' | 'succeeded' | 'failed';
+  authenticated: boolean;
+  authProcessing: boolean;
   authError: string | null;
   user: IUser | null;
-  refreshToken: string | null;
 }
 
 const initialState: AuthState = {
-  authState: 'idle',
+  authenticated: false,
+  authProcessing: false,
   authError: null,
   user: null,
-  refreshToken: null,
+};
+
+const resetAuthState = (state: AuthState): void => {
+  state.authenticated = false;
+  state.authError = null;
+  state.authProcessing = false;
 };
 
 export const authSlice = createSlice({
@@ -24,55 +30,66 @@ export const authSlice = createSlice({
     // login
     builder
       .addCase(logIn.pending, state => {
-        state.authError = null;
-        state.authState = 'pending';
+        resetAuthState(state);
+        state.authProcessing = true;
       })
-      .addCase(logIn.fulfilled, (state, action) => {
-        state.authState = 'succeeded';
+      .addCase(logIn.fulfilled, (state, { payload }) => {
+        state.authenticated = true;
+        state.authProcessing = false;
 
-        if (action.payload && action.payload.refresh_token) {
-          state.refreshToken = action.payload.refresh_token;
+        if (payload) {
+          state.user = payload;
         }
       })
       .addCase(logIn.rejected, (state, { payload }) => {
-        state.authState = 'failed';
+        state.authenticated = false;
         state.authError = payload as string;
       });
     // signup
     builder
       .addCase(signUp.pending, state => {
-        state.authError = null;
-        state.authState = 'pending';
+        resetAuthState(state);
+        state.authProcessing = true;
       })
       .addCase(signUp.fulfilled, state => {
-        state.authState = 'succeeded';
+        state.authProcessing = false;
       })
       .addCase(signUp.rejected, (state, { payload }) => {
-        state.authState = 'failed';
+        state.authProcessing = false;
         state.authError = payload as string;
       });
     // logOut
     builder
       .addCase(logOut.pending, state => {
-        state.authError = null;
+        resetAuthState(state);
+        state.authProcessing = true;
       })
       .addCase(logOut.fulfilled, state => {
-        state.authState = 'idle';
         state.user = null;
+        state.authProcessing = false;
       })
       .addCase(logOut.rejected, (state, { payload }) => {
-        state.authState = 'failed';
+        state.authProcessing = false;
         state.authError = payload as string;
       });
     // check auth
-    builder.addCase(checkAuth.fulfilled, (state, { payload }) => {
-      state.authError = null;
-      state.authState = 'succeeded';
+    builder
+      .addCase(checkAuth.pending, state => {
+        resetAuthState(state);
+        state.authProcessing = true;
+      })
+      .addCase(checkAuth.fulfilled, (state, { payload }) => {
+        state.authenticated = true;
 
-      if (payload) {
-        state.user = payload;
-      }
-    });
+        if (payload) {
+          state.user = payload;
+          state.authProcessing = false;
+        }
+      })
+      .addCase(checkAuth.rejected, (state, { payload }) => {
+        state.authProcessing = false;
+        state.authError = payload as string;
+      });
   },
 });
 
