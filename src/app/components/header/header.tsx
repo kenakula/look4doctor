@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
 import {
   AppBar,
-  Avatar,
   Box,
-  Button,
-  Container,
-  Divider,
   Drawer,
   IconButton,
+  Link,
   List,
   ListItem,
-  ListItemButton,
-  ListItemText,
   Menu,
   MenuItem,
   Toolbar,
@@ -20,24 +15,25 @@ import {
 import { NavLink } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAppSelector } from 'app/hooks';
-import { HOME_PAGE, LOGIN_PAGE, PROFILE_PAGE, SIGNUP_PAGE } from 'app/router';
+import { LOGIN_PAGE, PROFILE_PAGE, SIGNUP_PAGE } from 'app/router';
 import { logOut, useAppDispatch } from 'app/store';
+import DrawerComponent from './drawer-component';
+import { Container } from '../container/container';
+import { BurgerButton } from './custom-components';
+import { Logo } from '../logo/logo';
+import { Avatar } from '../avatar/avatar';
 
-const pages = [
-  { name: 'Врачи', url: '/doctors' },
-  { name: 'Клиники', url: '/clinics' },
-  { name: 'Услуги', url: '/services' },
-];
 const drawerWidth = 240;
 
 export const Header = (): JSX.Element => {
   const { authenticated, user } = useAppSelector(state => state.auth);
+  const { settings } = useAppSelector(state => state.assets);
   const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
   const dispatch = useAppDispatch();
 
   const handleDrawerToggle = (): void => {
-    setMobileOpen(!mobileOpen);
+    setMobileDrawerOpen(!mobileDrawerOpen);
   };
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>): void => {
@@ -48,156 +44,131 @@ export const Header = (): JSX.Element => {
     setAnchorElUser(null);
   };
 
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        Look4Doctor
-      </Typography>
-      <Divider />
-      <List>
-        {pages.map(({ name, url }) => (
-          <ListItem key={url} disablePadding>
-            <ListItemButton
-              sx={{ textAlign: 'center' }}
-              component={NavLink}
-              to={url}
-            >
-              <ListItemText primary={name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
+  const authedMenu = [
+    <MenuItem
+      key="lk"
+      onClick={handleCloseUserMenu}
+      component={NavLink}
+      to={PROFILE_PAGE}
+    >
+      <Typography>Личный кабинет</Typography>
+    </MenuItem>,
+    <MenuItem
+      key="logout"
+      onClick={() => {
+        handleCloseUserMenu();
+        dispatch(logOut());
+      }}
+    >
+      <Typography>Выйти</Typography>
+    </MenuItem>,
+  ];
 
-  const authControls = (
-    <Box sx={{ ml: 'auto' }}>
-      <Button
-        color="inherit"
-        variant="outlined"
-        sx={{ mr: 1 }}
-        component={NavLink}
-        to={LOGIN_PAGE}
-      >
-        Войти
-      </Button>
-      <Button
-        color="inherit"
-        variant="text"
-        component={NavLink}
-        to={SIGNUP_PAGE}
-      >
-        Регистрация
-      </Button>
-    </Box>
-  );
-
-  const menuElement = (
-    <Box className="user-menu" sx={{ ml: 'auto' }}>
-      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-      </IconButton>
-      <Menu
-        sx={{ mt: '45px' }}
-        id="menu-appbar"
-        anchorEl={anchorElUser}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
-      >
-        <MenuItem
-          onClick={handleCloseUserMenu}
-          component={NavLink}
-          to={PROFILE_PAGE}
-        >
-          <Typography textAlign="center">Личный кабинет</Typography>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleCloseUserMenu();
-            dispatch(logOut());
-          }}
-        >
-          <Typography textAlign="center">Выйти</Typography>
-        </MenuItem>
-      </Menu>
-    </Box>
-  );
+  const publicMenu = [
+    <MenuItem
+      key="login"
+      onClick={handleCloseUserMenu}
+      component={NavLink}
+      to={LOGIN_PAGE}
+    >
+      <Typography>Войти</Typography>
+    </MenuItem>,
+    <MenuItem
+      key="signup"
+      onClick={handleCloseUserMenu}
+      component={NavLink}
+      to={SIGNUP_PAGE}
+    >
+      <Typography>Регистрация</Typography>
+    </MenuItem>,
+  ];
 
   return (
     <>
-      <AppBar position="static" component="nav" className="desctop-nav">
-        <Container maxWidth="xl">
+      <AppBar position="static" component="header" sx={{ py: 1 }} elevation={0}>
+        <Container>
           <Toolbar disableGutters>
-            <IconButton
+            <BurgerButton
               color="inherit"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ mr: 1, display: { sm: 'none' } }}
             >
               <MenuIcon />
-            </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component={NavLink}
-              to={HOME_PAGE}
+            </BurgerButton>
+            <Logo />
+            <List
+              dense
+              disablePadding
               sx={{
-                mr: 2,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
+                display: { xs: 'none', md: 'flex' },
+                marginLeft: 'auto',
+                alignItems: 'center',
               }}
             >
-              LOGO
-            </Typography>
-            <Box
-              sx={{ display: { xs: 'none', sm: 'block' }, marginLeft: 'auto' }}
-            >
-              {pages.map(({ name, url }) => (
-                <Button
-                  key={url}
-                  sx={{ color: '#fff', '&.active': { opacity: 0.3 } }}
-                  component={NavLink}
-                  to={url}
-                >
-                  {name}
-                </Button>
-              ))}
-            </Box>
+              {settings &&
+                settings.header_menu
+                  .filter(({ show_on_page }) => show_on_page)
+                  .map(({ name, url }) => (
+                    <ListItem key={url} sx={{ width: 'auto' }}>
+                      <Link
+                        sx={{ fontSize: 14, textDecoration: 'none' }}
+                        color="inherit"
+                        component={NavLink}
+                        to={`/${url}`}
+                      >
+                        {name}
+                      </Link>
+                    </ListItem>
+                  ))}
+            </List>
 
-            {user && authenticated ? menuElement : authControls}
+            <Box sx={{ ml: 'auto' }}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar user={user} />
+              </IconButton>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {authenticated ? authedMenu : publicMenu}
+              </Menu>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>
       <Box component="nav" className="mobile-nav">
         <Drawer
           variant="temporary"
-          open={mobileOpen}
+          open={mobileDrawerOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true,
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
+            display: { xs: 'block', md: 'none' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,
             },
           }}
         >
-          {drawer}
+          <DrawerComponent
+            handleDrawerToggle={handleDrawerToggle}
+            menuLinks={settings?.header_menu}
+          />
         </Drawer>
       </Box>
     </>

@@ -3,6 +3,7 @@ import { IUser } from 'app/shared/types';
 import { checkAuth, logIn, logOut, signUp } from './auth.thunks';
 
 interface AuthState {
+  storeInited: boolean;
   authenticated: boolean;
   authProcessing: boolean;
   authError: string | null;
@@ -10,6 +11,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
+  storeInited: false,
   authenticated: false,
   authProcessing: false,
   authError: null,
@@ -24,7 +26,11 @@ const resetAuthState = (state: AuthState): void => {
 
 export const authSlice = createSlice({
   name: 'auth',
-  reducers: {},
+  reducers: {
+    initAuthStore: state => {
+      state.storeInited = true;
+    },
+  },
   initialState,
   extraReducers: builder => {
     // login
@@ -94,4 +100,5 @@ export const authSlice = createSlice({
 });
 
 export const authActions = authSlice.actions;
+export const { initAuthStore } = authSlice.actions;
 export const authReducer = authSlice.reducer;

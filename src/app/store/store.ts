@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { useDispatch } from 'react-redux';
+import { assetsReducer } from './assets-slice/assets.slice';
 import { authReducer } from './auth-slice/auth.slice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    assets: assetsReducer,
   },
 });
 

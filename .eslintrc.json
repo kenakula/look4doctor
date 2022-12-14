@@ -37,7 +37,8 @@
     }
   },
   "globals": {
-    "JSX": true
+    "JSX": true,
+    "NodeJS": true
   },
   "rules": {
     "react/react-in-jsx-scope": "off",

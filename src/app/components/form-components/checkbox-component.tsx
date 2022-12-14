@@ -1,6 +1,6 @@
 import { FormControlLabel } from '@mui/material';
 import { Controller } from 'react-hook-form';
-import { CustomCheckbox } from './assets';
+import { CustomCheckbox } from './custom-components';
 
 interface Props {
   error?: boolean;
@@ -28,9 +28,9 @@ export const CheckboxComponent = ({
           control={formControl}
           render={({ field }) => (
             <CustomCheckbox
+              {...field}
               disabled={disabled}
               color={color}
-              {...field}
               checked={field.value}
               onChange={e => field.onChange(e.target.checked)}
             />

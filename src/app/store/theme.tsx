@@ -37,7 +37,7 @@ export const ThemeStoreProvider = ({ children }: Props): JSX.Element => {
         palette: {
           mode,
           primary: {
-            main: '#29a19c',
+            main: '#399fae',
           },
           warning: {
             main: '#ecca75',

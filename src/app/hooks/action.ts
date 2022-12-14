@@ -1,9 +1,10 @@
 import { bindActionCreators } from '@reduxjs/toolkit';
-import { authActions } from 'app/store';
+import { assetsActions, authActions } from 'app/store';
 import { useDispatch } from 'react-redux';
 
 const actions = {
   ...authActions,
+  ...assetsActions,
 };
 
 export const useActions = (): Record<string, unknown> => {
