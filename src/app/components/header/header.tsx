@@ -10,9 +10,8 @@ import {
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useAppSelector } from 'app/hooks';
 import { LOGIN_PAGE, PROFILE_PAGE, SIGNUP_PAGE } from 'app/router';
-import { logOut, useAppDispatch } from 'app/store';
+import { logOut, useAppDispatch, useAppSelector } from 'app/store';
 import DrawerComponent from './drawer-component';
 import { Container } from '../container/container';
 import { BurgerButton } from './custom-components';

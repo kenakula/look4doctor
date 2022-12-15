@@ -1,5 +1,5 @@
 import { Loader } from 'app/components';
-import { useAppSelector } from 'app/hooks';
+import { useAppSelector } from 'app/store';
 import { Navigate, useLocation } from 'react-router-dom';
 import { LOGIN_PAGE } from './routes';
 

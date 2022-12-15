@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
-import { useDispatch } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { assetsReducer } from './assets-slice/assets.slice';
 import { authReducer } from './auth-slice/auth.slice';
 
@@ -22,3 +22,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

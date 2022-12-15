@@ -1,4 +1,4 @@
-import { useAppSelector } from 'app/hooks';
+import { useAppSelector } from 'app/store';
 import { Navigate } from 'react-router-dom';
 import { HOME_PAGE } from './routes';
 
