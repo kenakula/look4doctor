@@ -1,18 +1,7 @@
 import React, { useState } from 'react';
-import {
-  AppBar,
-  Box,
-  IconButton,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Typography,
-} from '@mui/material';
-import { NavLink } from 'react-router-dom';
-import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Box, IconButton, Menu, Toolbar } from '@mui/material';
 import { useAppSelector } from 'app/hooks';
-import { LOGIN_PAGE, PROFILE_PAGE, SIGNUP_PAGE } from 'app/router';
-import { logOut, useAppDispatch } from 'app/store';
+import { logOut, useAppDispatch, useCustomTheme } from 'app/store';
 import DrawerComponent from './drawer-component';
 import { Container } from '../container/container';
 import { BurgerButton } from './custom-components';
@@ -20,6 +9,7 @@ import { Logo } from '../logo/logo';
 import { Avatar } from '../avatar/avatar';
 import { ActionBlock } from './action-block';
 import { MainNav } from './main-nav';
+import { authedMenu, publicMenu } from './assets';
 
 export const Header = (): JSX.Element => {
   const { authenticated, user } = useAppSelector(state => state.auth);
@@ -27,6 +17,7 @@ export const Header = (): JSX.Element => {
   const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
   const dispatch = useAppDispatch();
+  const { toggleColorMode } = useCustomTheme();
 
   const handleDrawerToggle = (): void => {
     setMobileDrawerOpen(!mobileDrawerOpen);
@@ -40,44 +31,17 @@ export const Header = (): JSX.Element => {
     setAnchorElUser(null);
   };
 
-  const authedMenu = [
-    <MenuItem
-      key="lk"
-      onClick={handleCloseUserMenu}
-      component={NavLink}
-      to={PROFILE_PAGE}
-    >
-      <Typography>Личный кабинет</Typography>
-    </MenuItem>,
-    <MenuItem
-      key="logout"
-      onClick={() => {
-        handleCloseUserMenu();
-        dispatch(logOut());
-      }}
-    >
-      <Typography>Выйти</Typography>
-    </MenuItem>,
-  ];
+  const handleColorModeClick = (): void => {
+    handleCloseUserMenu();
 
-  const publicMenu = [
-    <MenuItem
-      key="login"
-      onClick={handleCloseUserMenu}
-      component={NavLink}
-      to={LOGIN_PAGE}
-    >
-      <Typography>Войти</Typography>
-    </MenuItem>,
-    <MenuItem
-      key="signup"
-      onClick={handleCloseUserMenu}
-      component={NavLink}
-      to={SIGNUP_PAGE}
-    >
-      <Typography>Регистрация</Typography>
-    </MenuItem>,
-  ];
+    if (toggleColorMode) {
+      toggleColorMode();
+    }
+  };
+
+  const handleLogout = (): void => {
+    dispatch(logOut());
+  };
 
   return (
     <>
@@ -93,7 +57,7 @@ export const Header = (): JSX.Element => {
               edge="start"
               onClick={handleDrawerToggle}
             >
-              <MenuIcon />
+              <span />
             </BurgerButton>
             <Logo />
             {settings && <MainNav menu={settings.header_menu} />}
@@ -117,7 +81,16 @@ export const Header = (): JSX.Element => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {authenticated ? authedMenu : publicMenu}
+                {authenticated
+                  ? authedMenu({
+                      closeMenu: handleCloseUserMenu,
+                      toggleColorMode: handleColorModeClick,
+                      handleLogout,
+                    })
+                  : publicMenu({
+                      closeMenu: handleCloseUserMenu,
+                      toggleColorMode: handleColorModeClick,
+                    })}
               </Menu>
             </Box>
           </Toolbar>
