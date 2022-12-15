@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 import {
   AppBar,
   Box,
-  Drawer,
   IconButton,
-  Link,
-  List,
-  ListItem,
   Menu,
   MenuItem,
   Toolbar,
@@ -22,8 +18,8 @@ import { Container } from '../container/container';
 import { BurgerButton } from './custom-components';
 import { Logo } from '../logo/logo';
 import { Avatar } from '../avatar/avatar';
-
-const drawerWidth = 240;
+import { ActionBlock } from './action-block';
+import { MainNav } from './main-nav';
 
 export const Header = (): JSX.Element => {
   const { authenticated, user } = useAppSelector(state => state.auth);
@@ -86,43 +82,21 @@ export const Header = (): JSX.Element => {
   return (
     <>
       <AppBar position="static" component="header" sx={{ py: 1 }} elevation={0}>
-        <Container>
+        <Container styles={{ position: 'relative' }}>
+          {settings && settings.action_buttons ? (
+            <ActionBlock buttons={settings.action_buttons[0]} />
+          ) : null}
           <Toolbar disableGutters>
             <BurgerButton
               color="inherit"
-              aria-label="open drawer"
+              aria-label="Открыть меню"
               edge="start"
               onClick={handleDrawerToggle}
             >
               <MenuIcon />
             </BurgerButton>
             <Logo />
-            <List
-              dense
-              disablePadding
-              sx={{
-                display: { xs: 'none', md: 'flex' },
-                marginLeft: 'auto',
-                alignItems: 'center',
-              }}
-            >
-              {settings &&
-                settings.header_menu
-                  .filter(({ show_on_page }) => show_on_page)
-                  .map(({ name, url }) => (
-                    <ListItem key={url} sx={{ width: 'auto' }}>
-                      <Link
-                        sx={{ fontSize: 14, textDecoration: 'none' }}
-                        color="inherit"
-                        component={NavLink}
-                        to={`/${url}`}
-                      >
-                        {name}
-                      </Link>
-                    </ListItem>
-                  ))}
-            </List>
-
+            {settings && <MainNav menu={settings.header_menu} />}
             <Box sx={{ ml: 'auto' }}>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar user={user} />
@@ -149,28 +123,11 @@ export const Header = (): JSX.Element => {
           </Toolbar>
         </Container>
       </AppBar>
-      <Box component="nav" className="mobile-nav">
-        <Drawer
-          variant="temporary"
-          open={mobileDrawerOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-        >
-          <DrawerComponent
-            handleDrawerToggle={handleDrawerToggle}
-            menuLinks={settings?.header_menu}
-          />
-        </Drawer>
-      </Box>
+      <DrawerComponent
+        handleDrawerToggle={handleDrawerToggle}
+        menuLinks={settings?.header_menu}
+        openState={mobileDrawerOpen}
+      />
     </>
   );
 };
