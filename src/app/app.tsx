@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Loader } from './components/loader/loader';
+import { useGeocoding } from './hooks';
 import { RouterComponent } from './router';
 import {
   checkAuth,
@@ -8,6 +9,7 @@ import {
   getSettings,
   getSpecialties,
   initAuthStore,
+  setGeocodedCity,
   ThemeStoreProvider,
   useAppDispatch,
 } from './store';
@@ -15,6 +17,13 @@ import {
 export const App = (): JSX.Element => {
   const [loading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
+  const { closestCity } = useGeocoding();
+
+  useEffect(() => {
+    if (closestCity) {
+      dispatch(setGeocodedCity(closestCity));
+    }
+  }, [closestCity, dispatch]);
 
   useEffect(() => {
     dispatch(initAuthStore());

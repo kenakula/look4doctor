@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { AppBar, Box, IconButton, Menu, Toolbar } from '@mui/material';
-import { useAppSelector } from 'app/hooks';
-import { logOut, useAppDispatch, useCustomTheme } from 'app/store';
+import {
+  logOut,
+  useAppDispatch,
+  useAppSelector,
+  useCustomTheme,
+} from 'app/store';
 import DrawerComponent from './drawer-component';
 import { Container } from '../container/container';
 import { BurgerButton } from './custom-components';

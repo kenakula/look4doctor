@@ -6,3 +6,4 @@ export * from './container/container';
 export * from './logo/logo';
 export * from './loader/loader';
 export * from './avatar/avatar';
+export * from './region-select/region-select';

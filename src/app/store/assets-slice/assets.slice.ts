@@ -44,18 +44,41 @@ const initialState: AssetsState = {
 export const assetsSlice = createSlice({
   name: 'assets',
   reducers: {
-    setCurrentCity: (state, { payload }: PayloadAction<ICity | undefined>) => {
-      if (payload) {
-        state.currentCity = payload;
-
-        return;
-      }
-
+    getSavedCityAndRegion: state => {
       const storedCity = localStorage.getItem(LOCAL_STORAGE_CURRENT_CITY);
 
       if (storedCity) {
-        state.currentCity = JSON.parse(storedCity);
+        const city = JSON.parse(storedCity) as ICity;
+        state.currentCity = city;
+
+        if (city.region) {
+          state.currentRegion = city.region;
+        }
       }
+    },
+    setCurrentCity: (state, { payload }: PayloadAction<ICity>) => {
+      state.currentCity = payload;
+
+      if (payload.region) {
+        state.currentRegion = payload.region;
+      }
+
+      localStorage.setItem(LOCAL_STORAGE_CURRENT_CITY, JSON.stringify(payload));
+    },
+    setGeocodedCity: (state, { payload }: PayloadAction<ICity>) => {
+      const storedCity = localStorage.getItem(LOCAL_STORAGE_CURRENT_CITY);
+
+      if (storedCity) {
+        return;
+      }
+
+      state.currentCity = payload;
+
+      if (payload.region) {
+        state.currentRegion = payload.region;
+      }
+
+      localStorage.setItem(LOCAL_STORAGE_CURRENT_CITY, JSON.stringify(payload));
     },
     setCurrentRegion: (
       state,
@@ -72,15 +95,6 @@ export const assetsSlice = createSlice({
       if (storedRegion) {
         state.currentRegion = JSON.parse(storedRegion);
       }
-    },
-    saveRegionToStorage: (_, { payload }: PayloadAction<IRegion>) => {
-      localStorage.setItem(
-        LOCAL_STORAGE_CURRENT_REGION,
-        JSON.stringify(payload),
-      );
-    },
-    saveCityToStorage: (_, { payload }: PayloadAction<ICity>) => {
-      localStorage.setItem(LOCAL_STORAGE_CURRENT_CITY, JSON.stringify(payload));
     },
   },
   initialState,
@@ -161,5 +175,10 @@ export const assetsSlice = createSlice({
   },
 });
 
-export const assetsActions = assetsSlice.actions;
+export const {
+  setCurrentCity,
+  setGeocodedCity,
+  setCurrentRegion,
+  getSavedCityAndRegion,
+} = assetsSlice.actions;
 export const assetsReducer = assetsSlice.reducer;
