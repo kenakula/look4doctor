@@ -1,6 +1,30 @@
+import { PaletteMode } from '@mui/material';
 import { IUser } from '../types';
 
-export const getUserColorString = (user: IUser | null): string => {
+const newShade = (color: string, magnitude: number): string => {
+  const hexColor = color.replace('#', '');
+  if (hexColor.length === 6) {
+    const decimalColor = parseInt(hexColor, 16);
+
+    let r = (decimalColor >> 16) + magnitude;
+    r > 255 && (r = 255);
+    r < 0 && (r = 0);
+    let g = (decimalColor & 0x0000ff) + magnitude;
+    g > 255 && (g = 255);
+    g < 0 && (g = 0);
+    let b = ((decimalColor >> 8) & 0x00ff) + magnitude;
+    b > 255 && (b = 255);
+    b < 0 && (b = 0);
+    return `#${(g | (b << 8) | (r << 16)).toString(16)}`;
+  }
+
+  return hexColor;
+};
+
+export const getUserColorString = (
+  user: IUser | null,
+  themeMode: PaletteMode | undefined,
+): string => {
   if (!user) {
     return '';
   }
@@ -27,5 +51,5 @@ export const getUserColorString = (user: IUser | null): string => {
   }
   /* eslint-enable no-bitwise */
 
-  return color;
+  return themeMode === 'light' ? color : newShade(color, 50);
 };

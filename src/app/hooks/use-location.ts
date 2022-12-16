@@ -6,13 +6,15 @@ import { getDistanceBetweenLocations } from './assets';
 interface GeocodingInterface {
   currentPosition: GeolocationCoordinates | null;
   closestCity: ICity | null;
+  defaultCity: ICity | null | undefined;
 }
 
 export const useLocation = (): GeocodingInterface => {
   const [currentPosition, setCurrentPosition] =
     useState<GeolocationCoordinates | null>(null);
   const [closestCity, setClosestCity] = useState<ICity | null>(null);
-  const { cities } = useAppSelector(state => state.assets);
+  const { cities } = useAppSelector(state => state.location);
+  const defaultCity = cities && cities.find(city => city.is_default);
 
   const citiesMap = useMemo(() => {
     return new Map<ICity, number>();
@@ -51,5 +53,5 @@ export const useLocation = (): GeocodingInterface => {
     }
   }, [currentPosition, cities, citiesMap]);
 
-  return { currentPosition, closestCity };
+  return { currentPosition, closestCity, defaultCity };
 };

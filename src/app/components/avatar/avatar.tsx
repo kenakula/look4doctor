@@ -1,6 +1,7 @@
 import { Avatar as AvatarComponent } from '@mui/material';
 import { IUser } from 'app/shared/types';
 import { getAvatarLetters, getUserColorString } from 'app/shared/assets';
+import { useCustomTheme } from 'app/store';
 
 interface Props {
   user: IUser | null;
@@ -9,11 +10,13 @@ interface Props {
 }
 
 export const Avatar = ({ user, alt = '', size }: Props): JSX.Element => {
+  const { theme } = useCustomTheme();
+
   return (
     <AvatarComponent
       alt={alt}
       sx={{
-        background: getUserColorString(user),
+        background: getUserColorString(user, theme?.palette.mode),
         width: size,
         height: size,
       }}

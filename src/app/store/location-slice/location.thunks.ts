@@ -1,19 +1,18 @@
-/* eslint-disable consistent-return */
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ISettings, ISpecialty } from 'app/shared/types';
 import { AxiosError } from 'axios';
-import { axiosInstance } from '../assets/axios';
+import { IRegion, ICity } from 'app/shared/types';
+import { axiosInstance } from '../assets';
 
 interface DirectusResponse<T> {
   data: T;
 }
 
-export const getSettings = createAsyncThunk<ISettings>(
-  'assets/getSettings',
+export const getRegions = createAsyncThunk(
+  'assets/getRegions',
   async (_, thunkApi) => {
     try {
-      const res = await axiosInstance.get<DirectusResponse<ISettings>>(
-        'items/settings',
+      const res = await axiosInstance.get<DirectusResponse<IRegion[]>>(
+        'items/regions',
         {
           params: {
             limit: -1,
@@ -34,15 +33,16 @@ export const getSettings = createAsyncThunk<ISettings>(
   },
 );
 
-export const getSpecialties = createAsyncThunk(
-  'assets/getSpecialties',
+export const getCities = createAsyncThunk(
+  'assets/getCities',
   async (_, thunkApi) => {
     try {
-      const res = await axiosInstance.get<DirectusResponse<ISpecialty[]>>(
-        'items/specialties',
+      const res = await axiosInstance.get<DirectusResponse<ICity[]>>(
+        'items/cities',
         {
           params: {
             limit: -1,
+            fields: '*.*',
           },
         },
       );

@@ -3,11 +3,13 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { assetsReducer } from './assets-slice/assets.slice';
 import { authReducer } from './auth-slice/auth.slice';
+import { locationReducer } from './location-slice/location.slice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     assets: assetsReducer,
+    location: locationReducer,
   },
 });
 

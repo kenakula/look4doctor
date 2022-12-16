@@ -3,25 +3,21 @@ import { useLocation } from './hooks';
 import { RouterComponent } from './router';
 import {
   checkAuth,
-  getCities,
-  getRegions,
   getSettings,
   getSpecialties,
   initAuthStore,
-  setGeocodedCity,
   ThemeStoreProvider,
   useAppDispatch,
 } from './store';
+import {
+  setCurrentLocationFromGeo,
+  setCurrentLocationFromStorage,
+} from './store/location-slice/location.slice';
+import { getRegions, getCities } from './store/location-slice/location.thunks';
 
 export const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { closestCity } = useLocation();
-
-  useEffect(() => {
-    if (closestCity) {
-      dispatch(setGeocodedCity(closestCity));
-    }
-  }, [closestCity, dispatch]);
+  const { closestCity, defaultCity } = useLocation();
 
   useEffect(() => {
     dispatch(initAuthStore());
@@ -37,6 +33,14 @@ export const App = (): JSX.Element => {
 
     dispatch(getSpecialties());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(setCurrentLocationFromStorage());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(setCurrentLocationFromGeo(closestCity));
+  }, [dispatch, closestCity, defaultCity]);
 
   return (
     <ThemeStoreProvider>
