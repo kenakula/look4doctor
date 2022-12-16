@@ -8,3 +8,6 @@ export const DOCTORS_PAGE = '/doctors';
 export const CLINICS_PAGE = '/clinics';
 export const SERVICES_PAGE = '/services';
 export const PROFILE_PAGE = '/profile';
+export const CONTACTS_PAGE = '/contacts';
+export const INSURANCE_PAGE = '/insurance';
+export const TELEMED_PAGE = '/telemed';

@@ -15,7 +15,6 @@ import {
 } from './store';
 
 export const App = (): JSX.Element => {
-  const [loading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
   const { closestCity } = useGeocoding();
 
@@ -35,16 +34,16 @@ export const App = (): JSX.Element => {
       dispatch(getSettings()).unwrap(),
       dispatch(getRegions()).unwrap(),
       dispatch(getCities()).unwrap(),
-    ]).then(() => {
-      setLoading(false);
-    });
+    ]);
 
     dispatch(getSpecialties());
   }, [dispatch]);
 
-  const content = loading ? <Loader size={100} /> : <RouterComponent />;
-
-  return <ThemeStoreProvider>{content}</ThemeStoreProvider>;
+  return (
+    <ThemeStoreProvider>
+      <RouterComponent />
+    </ThemeStoreProvider>
+  );
 };
 
 export default App;
