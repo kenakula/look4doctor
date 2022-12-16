@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Loader } from './components/loader/loader';
-import { useGeocoding } from './hooks';
+import { useEffect } from 'react';
+import { useLocation } from './hooks';
 import { RouterComponent } from './router';
 import {
   checkAuth,
@@ -16,7 +15,7 @@ import {
 
 export const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { closestCity } = useGeocoding();
+  const { closestCity } = useLocation();
 
   useEffect(() => {
     if (closestCity) {

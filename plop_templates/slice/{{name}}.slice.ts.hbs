@@ -1,0 +1,23 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+interface {{componentName name}}State {
+  loading: boolean;
+}
+
+const initialState: {{componentName name}}State = {
+  loading: false,
+};
+
+export const {{name}}Slice = createSlice({
+  name: 'assets',
+  reducers: {
+    test: (state, { payload }: PayloadAction<ITest>) => {
+      console.log(state)
+    }
+  },
+  initialState,
+  extraReducers: { test },
+})
+
+export const {} = {{name}}Slice.actions;
+export const {{name}}Reducer = {{name}}Slice.reducer;

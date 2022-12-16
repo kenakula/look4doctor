@@ -8,7 +8,7 @@ interface GeocodingInterface {
   closestCity: ICity | null;
 }
 
-export const useGeocoding = (): GeocodingInterface => {
+export const useLocation = (): GeocodingInterface => {
   const [currentPosition, setCurrentPosition] =
     useState<GeolocationCoordinates | null>(null);
   const [closestCity, setClosestCity] = useState<ICity | null>(null);

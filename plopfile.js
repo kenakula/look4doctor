@@ -35,6 +35,24 @@ module.exports = function (plop) {
       },
     ],
   });
+  plop.setGenerator('slice', {
+    description: 'React Redux toolkit slice using Typescript',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'Name: ',
+      },
+    ],
+    actions: [
+      {
+        type: 'addMany',
+        destination: 'src/app/store/{{name}}-slice',
+        templateFiles: 'plop_templates/slice/*.hbs',
+        base: 'plop_templates/slice',
+      },
+    ],
+  });
   plop.setHelper('componentName', value => {
     return value
       .split('-')
