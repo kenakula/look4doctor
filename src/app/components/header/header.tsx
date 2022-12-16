@@ -6,14 +6,17 @@ import {
   useAppSelector,
   useCustomTheme,
 } from 'app/store';
-import DrawerComponent from './drawer-component';
 import { Container } from '../container/container';
-import { BurgerButton } from './custom-components';
 import { Logo } from '../logo/logo';
 import { Avatar } from '../avatar/avatar';
-import { ActionBlock } from './action-block';
-import { MainNav } from './main-nav';
-import { authedMenu, publicMenu } from './assets';
+import {
+  ActionBlock,
+  authedMenu,
+  BurgerButton,
+  DrawerComponent,
+  MainNav,
+  publicMenu,
+} from './assets';
 
 export const Header = (): JSX.Element => {
   const { authenticated, user } = useAppSelector(state => state.auth);

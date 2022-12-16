@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { CustomPaper } from './custom-components';
+import { CustomPaper } from './assets';
 
 interface Props {
   text: string | string[];

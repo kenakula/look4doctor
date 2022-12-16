@@ -19,7 +19,7 @@ interface Props {
   menuLinks?: HeaderMenu[];
 }
 
-const DrawerComponent = ({
+export const DrawerComponent = ({
   handleDrawerToggle,
   menuLinks,
   openState,
@@ -65,5 +65,3 @@ const DrawerComponent = ({
     </Drawer>
   );
 };
-
-export default DrawerComponent;

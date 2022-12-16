@@ -1,6 +1,6 @@
 import { FormControlLabel } from '@mui/material';
 import { Controller } from 'react-hook-form';
-import { CustomCheckbox } from './custom-components';
+import { CustomCheckbox } from './assets/custom-components';
 
 interface Props {
   error?: boolean;

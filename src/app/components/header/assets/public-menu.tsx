@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { LOGIN_PAGE, SIGNUP_PAGE } from 'app/router';
-import { ColorModeToggler } from '../custom-components';
+import { ColorModeToggler } from './custom-components';
 import { ReactComponent as MoonIcon } from 'assets/images/icon-moon.svg';
 
 interface Props {
