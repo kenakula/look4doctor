@@ -15,18 +15,22 @@ export const ErrorBoundary = ({
       <Typography variant="h3" color="error" textAlign="center">
         Произошла ошибка
       </Typography>
-      {Array.isArray(text)
-        ? text.map(value => (
-            <Typography
-              sx={{ opacity: 0.5 }}
-              key={value}
-              variant="body1"
-              textAlign="center"
-            >
-              {`"${value}"`}
-            </Typography>
-          ))
-        : text}
+      {Array.isArray(text) ? (
+        text.map(value => (
+          <Typography
+            sx={{ opacity: 0.5 }}
+            key={value}
+            variant="body1"
+            textAlign="center"
+          >
+            {`"${value}"`}
+          </Typography>
+        ))
+      ) : (
+        <Typography textAlign="center" variant="body1">
+          {text}
+        </Typography>
+      )}
       <Typography variant="h5" textAlign="center">
         {advice}
       </Typography>
