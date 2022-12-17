@@ -1,6 +1,5 @@
 import { Avatar, Box } from '@mui/material';
 import { useAppSelector } from 'app/store';
-import React, { useEffect, useState } from 'react';
 
 export const ProfilePage = (): JSX.Element => {
   const { user } = useAppSelector(state => state.auth);
