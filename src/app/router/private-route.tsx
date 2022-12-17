@@ -9,15 +9,13 @@ interface Props {
 
 export const PrivateRoute = ({ children }: Props): JSX.Element => {
   const location = useLocation();
-  const { authenticated, storeInited, authProcessing } = useAppSelector(
-    state => state.auth,
-  );
+  const { authenticated, authProcessing } = useAppSelector(state => state.auth);
 
   if (authProcessing) {
     return <Loader size={100} />;
   }
 
-  if (!authenticated && !authProcessing && storeInited) {
+  if (!authenticated && !authProcessing) {
     // Redirect users to the login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience

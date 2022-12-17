@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IUser } from 'app/shared/types';
-import { checkAuth, logIn, logOut, signUp } from './auth.thunks';
+import { checkAuth, logIn, logOut, refreshAuth, signUp } from './auth.thunks';
 
 interface AuthState {
-  storeInited: boolean;
+  storeRefreshed: boolean;
   authenticated: boolean;
   authProcessing: boolean;
   authError: string | null;
@@ -11,7 +11,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  storeInited: false,
+  storeRefreshed: false,
   authenticated: false,
   authProcessing: false,
   authError: null,
@@ -27,8 +27,8 @@ const resetAuthState = (state: AuthState): void => {
 export const authSlice = createSlice({
   name: 'auth',
   reducers: {
-    initAuthStore: state => {
-      state.storeInited = true;
+    setAuthRefreshed: state => {
+      state.storeRefreshed = true;
     },
   },
   initialState,
@@ -91,13 +91,23 @@ export const authSlice = createSlice({
           state.user = payload;
           state.authProcessing = false;
         }
+      });
+    // refresh
+    builder
+      .addCase(refreshAuth.pending, state => {
+        resetAuthState(state);
+        state.storeRefreshed = false;
+        state.authProcessing = true;
       })
-      .addCase(checkAuth.rejected, (state, { payload }) => {
+      .addCase(refreshAuth.fulfilled, state => {
         state.authProcessing = false;
-        state.authError = payload as string;
+        state.authenticated = true;
+        state.storeRefreshed = true;
+      })
+      .addCase(refreshAuth.rejected, state => {
+        state.authProcessing = false;
       });
   },
 });
 
-export const { initAuthStore } = authSlice.actions;
 export const authReducer = authSlice.reducer;

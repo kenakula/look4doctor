@@ -17,10 +17,15 @@ import {
   MainNav,
   publicMenu,
 } from './assets';
+import { useGetSettingsQuery } from 'app/store/assets-slice/assets.api';
 
 export const Header = (): JSX.Element => {
   const { authenticated, user } = useAppSelector(state => state.auth);
-  const { settings } = useAppSelector(state => state.assets);
+  // const { settings } = useAppSelector(state => state.assets);
+  // eslint-disable-next-line no-undef
+  const { data } = useGetSettingsQuery(null, {
+    refetchOnFocus: false,
+  });
   const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
   const dispatch = useAppDispatch();
@@ -54,8 +59,8 @@ export const Header = (): JSX.Element => {
     <>
       <AppBar position="static" component="header" sx={{ py: 1 }} elevation={0}>
         <Container styles={{ position: 'relative' }}>
-          {settings && settings.action_buttons ? (
-            <ActionBlock buttons={settings.action_buttons[0]} />
+          {data && data.action_buttons ? (
+            <ActionBlock buttons={data.action_buttons[0]} />
           ) : null}
           <Toolbar disableGutters>
             <BurgerButton
@@ -67,7 +72,7 @@ export const Header = (): JSX.Element => {
               <span />
             </BurgerButton>
             <Logo />
-            {settings && <MainNav menu={settings.header_menu} />}
+            {data && <MainNav menu={data.header_menu} />}
             <Box sx={{ ml: 'auto' }}>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar user={user} />
@@ -105,7 +110,7 @@ export const Header = (): JSX.Element => {
       </AppBar>
       <DrawerComponent
         handleDrawerToggle={handleDrawerToggle}
-        menuLinks={settings?.header_menu}
+        menuLinks={data?.header_menu}
         openState={mobileDrawerOpen}
       />
     </>

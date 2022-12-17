@@ -1,38 +1,58 @@
 import { useEffect } from 'react';
+import { ErrorBoundary, Loader } from './components';
 import { useLocation } from './hooks';
 import { RouterComponent } from './router';
 import {
   checkAuth,
-  getSettings,
-  getSpecialties,
-  initAuthStore,
+  refreshAuth,
   ThemeStoreProvider,
   useAppDispatch,
 } from './store';
 import {
+  useGetSettingsQuery,
+  useGetSpecialtiesQuery,
+} from './store/assets-slice';
+import { useGetCitiesQuery, useGetRegionsQuery } from './store/location-slice';
+import {
+  setCities,
   setCurrentLocationFromGeo,
   setCurrentLocationFromStorage,
+  setRegions,
 } from './store/location-slice/location.slice';
-import { getRegions, getCities } from './store/location-slice/location.thunks';
 
 export const App = (): JSX.Element => {
+  const { isLoading: settingsLoading, isError: settingsError } =
+    useGetSettingsQuery(null, {
+      refetchOnFocus: false,
+    });
+  const { isLoading: specialtiesLoading, isError: specialtiesError } =
+    useGetSpecialtiesQuery(null, { refetchOnFocus: false });
+  const { data: cities } = useGetCitiesQuery(null, { refetchOnFocus: false });
+  const { data: regions } = useGetRegionsQuery(null, { refetchOnFocus: false });
+
   const dispatch = useAppDispatch();
+  let ignoreAuth = false;
   const { closestCity, defaultCity } = useLocation();
 
   useEffect(() => {
-    dispatch(initAuthStore());
-    dispatch(checkAuth());
-  }, [dispatch]);
+    if (!ignoreAuth) {
+      dispatch(checkAuth())
+        .unwrap()
+        .catch(() => {
+          dispatch(refreshAuth());
+        });
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      ignoreAuth = true;
+    }
+  }, []);
 
   useEffect(() => {
-    Promise.allSettled([
-      dispatch(getSettings()).unwrap(),
-      dispatch(getRegions()).unwrap(),
-      dispatch(getCities()).unwrap(),
-    ]);
-
-    dispatch(getSpecialties());
-  }, [dispatch]);
+    if (cities && regions) {
+      dispatch(setCities(cities));
+      dispatch(setRegions(regions));
+    }
+  }, [cities, regions, dispatch]);
 
   useEffect(() => {
     dispatch(setCurrentLocationFromStorage());
@@ -40,7 +60,15 @@ export const App = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(setCurrentLocationFromGeo(closestCity));
-  }, [dispatch, closestCity, defaultCity]);
+  }, [closestCity, defaultCity, dispatch]);
+
+  if (settingsLoading || specialtiesLoading) {
+    return <Loader size={100} />;
+  }
+
+  if (settingsError || specialtiesError) {
+    return <ErrorBoundary text="Что-то пошло не так, попробуйте позже" />;
+  }
 
   return (
     <ThemeStoreProvider>

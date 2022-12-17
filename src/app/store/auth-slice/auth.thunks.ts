@@ -60,21 +60,12 @@ export const logOut = createAsyncThunk('auth/logOut', async (_, thunkApi) => {
   }
 });
 
-export const checkAuth = createAsyncThunk(
-  'auth/checkAuth',
-  async (_, thunkApi) => {
-    try {
-      const res = await directus.users.me.read();
+export const checkAuth = createAsyncThunk('auth/checkAuth', async () => {
+  const res = await directus.users.me.read();
 
-      return res as IUser;
-    } catch (error) {
-      if (error instanceof TransportError) {
-        if (!error.response) {
-          throw error;
-        }
+  return res as IUser;
+});
 
-        return thunkApi.rejectWithValue(error.errors[0].message);
-      }
-    }
-  },
-);
+export const refreshAuth = createAsyncThunk('auth/refresh', async () => {
+  await directus.auth.refresh();
+});

@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LOCAL_STORAGE_CURRENT_CITY } from 'app/shared/assets';
 import { ICity, IRegion } from 'app/shared/types';
-import { SliceError, DirectusError } from '../types';
-import { getRegions, getCities } from './location.thunks';
+import { SliceError } from '../types';
 
 interface LocationState {
   storedLocation: string | null;
@@ -27,6 +26,18 @@ const initialState: LocationState = {
 export const locationSlice = createSlice({
   name: 'assets',
   reducers: {
+    setCities: (state, { payload }: PayloadAction<ICity[]>) => {
+      state.cities = payload;
+
+      const defaultCity = payload.find(({ is_default }) => is_default);
+
+      if (defaultCity) {
+        state.defaultCity = defaultCity;
+      }
+    },
+    setRegions: (state, { payload }: PayloadAction<IRegion[]>) => {
+      state.regions = payload;
+    },
     setCurrentLocationFromStorage: state => {
       if (state.storedLocation) {
         state.currentLocation = JSON.parse(state.storedLocation) as ICity;
@@ -59,46 +70,13 @@ export const locationSlice = createSlice({
     },
   },
   initialState,
-  extraReducers: builder => {
-    // regions
-    builder
-      .addCase(getRegions.pending, state => {
-        state.loading = true;
-      })
-      .addCase(getRegions.fulfilled, (state, { payload }) => {
-        state.loading = false;
-
-        if (payload) {
-          state.regions = payload;
-        }
-      })
-      .addCase(getRegions.rejected, (state, { payload }) => {
-        state.loading = false;
-        state.error = (payload as DirectusError).errors;
-      });
-    // cities
-    builder
-      .addCase(getCities.pending, state => {
-        state.loading = true;
-      })
-      .addCase(getCities.fulfilled, (state, { payload }) => {
-        state.loading = false;
-
-        if (payload) {
-          state.cities = payload;
-          state.defaultCity = payload.find(({ is_default }) => is_default);
-        }
-      })
-      .addCase(getCities.rejected, (state, { payload }) => {
-        state.loading = false;
-        state.error = (payload as DirectusError).errors;
-      });
-  },
 });
 
 export const {
   setCurrentLocationFromStorage,
   setCurrentLocationFromGeo,
   setCurrentLocationFromSelect,
+  setCities,
+  setRegions,
 } = locationSlice.actions;
 export const locationReducer = locationSlice.reducer;
