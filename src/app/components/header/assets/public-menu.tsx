@@ -24,6 +24,12 @@ export const publicMenu = ({
       key="login"
       onClick={closeMenu}
       component={NavLink}
+      sx={{
+        '&.active': {
+          pointerEvents: 'none',
+          opacity: 0.3,
+        },
+      }}
       to={LOGIN_PAGE}
     >
       <Typography>Войти</Typography>
@@ -32,6 +38,12 @@ export const publicMenu = ({
       key="signup"
       onClick={closeMenu}
       component={NavLink}
+      sx={{
+        '&.active': {
+          pointerEvents: 'none',
+          opacity: 0.3,
+        },
+      }}
       to={SIGNUP_PAGE}
     >
       <Typography>Регистрация</Typography>

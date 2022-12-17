@@ -14,7 +14,7 @@ export const BurgerButton = styled(IconButton)(({ theme }) => ({
     display: 'block',
     width: 30,
     height: 2,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: '#ffffff',
     borderRadius: 4,
     '&::before, &::after': {
       content: '""',
@@ -24,7 +24,7 @@ export const BurgerButton = styled(IconButton)(({ theme }) => ({
       display: 'block',
       width: 30,
       height: 2,
-      backgroundColor: theme.palette.background.default,
+      backgroundColor: '#ffffff',
       borderRadius: 4,
     },
     '&::after': {

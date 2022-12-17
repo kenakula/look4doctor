@@ -52,7 +52,13 @@ export const DrawerComponent = ({
               .map(({ name, url }) => (
                 <ListItem key={url} disablePadding>
                   <ListItemButton
-                    sx={{ textAlign: 'center' }}
+                    sx={{
+                      textAlign: 'center',
+                      '&.active': {
+                        pointerEvents: 'none',
+                        opacity: 0.3,
+                      },
+                    }}
                     component={NavLink}
                     to={`/${url}`}
                   >

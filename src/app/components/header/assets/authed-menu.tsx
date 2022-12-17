@@ -26,6 +26,12 @@ export const authedMenu = ({
       key="lk"
       onClick={closeMenu}
       component={NavLink}
+      sx={{
+        '&.active': {
+          pointerEvents: 'none',
+          opacity: 0.3,
+        },
+      }}
       to={PROFILE_PAGE}
     >
       <Typography>Личный кабинет</Typography>

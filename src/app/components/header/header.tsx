@@ -21,8 +21,6 @@ import { useGetSettingsQuery } from 'app/store/assets-slice/assets.api';
 
 export const Header = (): JSX.Element => {
   const { authenticated, user } = useAppSelector(state => state.auth);
-  // const { settings } = useAppSelector(state => state.assets);
-  // eslint-disable-next-line no-undef
   const { data } = useGetSettingsQuery(null, {
     refetchOnFocus: false,
   });
