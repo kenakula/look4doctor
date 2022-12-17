@@ -1,5 +1,6 @@
-import { Box, Button, Link } from '@mui/material';
+import { Button, Link } from '@mui/material';
 import { ActionButtons } from 'app/shared/types';
+import { ActionBlockWrapper } from './custom-components';
 
 interface Props {
   buttons: ActionButtons;
@@ -10,15 +11,7 @@ export const ActionBlock = ({ buttons }: Props): JSX.Element | null => {
   const writeBtn = buttons.write[0];
 
   return (
-    <Box
-      sx={{
-        position: 'absolute',
-        right: 24,
-        bottom: '-100%',
-        display: 'flex',
-        columnGap: '10px',
-      }}
-    >
+    <ActionBlockWrapper>
       {callBtn && (
         <Button
           type="button"
@@ -35,6 +28,6 @@ export const ActionBlock = ({ buttons }: Props): JSX.Element | null => {
           {writeBtn.name}
         </Button>
       )}
-    </Box>
+    </ActionBlockWrapper>
   );
 };

@@ -7,7 +7,7 @@ interface CityCoords {
 }
 
 export interface ICity {
-  id: string;
+  id: number;
   status: StatusType;
   name: string;
   slug: string;

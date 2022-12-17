@@ -10,11 +10,17 @@ export const locationApi = createApi({
   }),
   endpoints: builder => ({
     getCities: builder.query<ICity[], string | null>({
-      query: id => (id ? `cities/${id}` : 'cities'),
+      query: id => ({
+        url: id ? `cities/${id}` : 'cities',
+        params: { fields: '*.*' },
+      }),
       transformResponse: (response: ApiResponse<ICity[]>) => response.data,
     }),
-    getRegions: builder.query<IRegion[], string | null>({
-      query: id => (id ? `regions/${id}` : 'regions'),
+    getRegions: builder.query<IRegion[], string>({
+      query: id => ({
+        url: id ? `regions/${id}` : 'regions',
+        params: { fields: '*.*' },
+      }),
       transformResponse: (response: ApiResponse<IRegion[]>) => response.data,
     }),
   }),

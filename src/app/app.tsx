@@ -28,7 +28,7 @@ export const App = (): JSX.Element => {
   const { isLoading: specialtiesLoading, isError: specialtiesError } =
     useGetSpecialtiesQuery(null, { refetchOnFocus: false });
   const { data: cities } = useGetCitiesQuery(null, { refetchOnFocus: false });
-  const { data: regions } = useGetRegionsQuery(null, { refetchOnFocus: false });
+  const { data: regions } = useGetRegionsQuery('', { refetchOnFocus: false });
 
   const dispatch = useAppDispatch();
   let ignoreAuth = false;
