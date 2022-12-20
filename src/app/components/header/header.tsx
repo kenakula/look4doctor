@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
-import { AppBar, Box, IconButton, Menu, Toolbar } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  IconButton,
+  Menu,
+  PopoverOrigin,
+  Toolbar,
+} from '@mui/material';
 import {
   logOut,
   useAppDispatch,
   useAppSelector,
   useCustomTheme,
+  useGetSettingsQuery,
 } from 'app/store';
 import { Container } from '../container/container';
 import { Logo } from '../logo/logo';
 import { Avatar } from '../avatar/avatar';
 import {
-  ActionBlock,
   authedMenu,
   BurgerButton,
   DrawerComponent,
@@ -18,7 +25,6 @@ import {
   MainNav,
   publicMenu,
 } from './assets';
-import { useGetSettingsQuery } from 'app/store/assets-slice/assets.api';
 
 export const Header = (): JSX.Element => {
   const { authenticated, user } = useAppSelector(state => state.auth);
@@ -30,6 +36,10 @@ export const Header = (): JSX.Element => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
   const dispatch = useAppDispatch();
   const { toggleColorMode } = useCustomTheme();
+  const menuAnchor: PopoverOrigin = {
+    vertical: 'top',
+    horizontal: 'right',
+  };
 
   const handleDrawerToggle = (): void => {
     setMobileDrawerOpen(!mobileDrawerOpen);
@@ -60,9 +70,6 @@ export const Header = (): JSX.Element => {
       <AppBar position="static" component="header" sx={{ py: 1 }} elevation={0}>
         <Container styles={{ position: 'relative' }}>
           {currentLocation && <LocationSelector location={currentLocation} />}
-          {data && data.action_buttons ? (
-            <ActionBlock buttons={data.action_buttons[0]} />
-          ) : null}
           <Toolbar disableGutters>
             <BurgerButton
               color="inherit"
@@ -75,22 +82,19 @@ export const Header = (): JSX.Element => {
             <Logo />
             {data && <MainNav menu={data.header_menu} />}
             <Box sx={{ ml: 'auto' }}>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton
+                aria-label="открыть меню"
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0 }}
+              >
                 <Avatar user={user} />
               </IconButton>
               <Menu
                 sx={{ mt: '45px' }}
-                id="menu-appbar"
                 anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
+                anchorOrigin={menuAnchor}
                 keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
+                transformOrigin={menuAnchor}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >

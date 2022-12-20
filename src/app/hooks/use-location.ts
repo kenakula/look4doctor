@@ -1,15 +1,15 @@
+import { getDistanceBetweenLocations } from 'app/shared/assets';
 import { ICity } from 'app/shared/types';
 import { useAppSelector } from 'app/store';
 import { useEffect, useMemo, useState } from 'react';
-import { getDistanceBetweenLocations } from './assets';
 
-interface GeocodingInterface {
+interface IUseLocation {
   currentPosition: GeolocationCoordinates | null;
   closestCity: ICity | null;
   defaultCity: ICity | null | undefined;
 }
 
-export const useLocation = (): GeocodingInterface => {
+export const useLocation = (): IUseLocation => {
   const [currentPosition, setCurrentPosition] =
     useState<GeolocationCoordinates | null>(null);
   const [closestCity, setClosestCity] = useState<ICity | null>(null);

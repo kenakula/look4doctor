@@ -1,11 +1,17 @@
 import { InputAdornment, SxProps } from '@mui/material';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  FieldValues,
+  Path,
+  UnPackAsyncDefaultValues,
+} from 'react-hook-form';
 import { CustomInput } from './assets/custom-components';
 
 interface Props<T extends FieldValues> {
   formControl: Control<T, any>;
   type: 'text' | 'email' | 'password';
-  name: Path<T>;
+  name: Path<UnPackAsyncDefaultValues<T>>;
   label?: string;
   fullwidth?: boolean;
   error?: boolean;

@@ -1,5 +1,6 @@
 import { Directus } from '@directus/sdk';
+import { BASE_DIRECTUS_PATH } from 'app/shared/assets';
 
-export const directus = new Directus('https://asw9h040.directus.app', {
+export const directus = new Directus(BASE_DIRECTUS_PATH, {
   auth: { mode: 'json', autoRefresh: false },
 });

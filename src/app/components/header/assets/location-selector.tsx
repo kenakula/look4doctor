@@ -24,8 +24,11 @@ import {
 import { grey } from '@mui/material/colors';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
-import { useAppDispatch, useAppSelector } from 'app/store';
-import { setCurrentLocationFromSelect } from 'app/store/location-slice/location.slice';
+import {
+  setCurrentLocationFromSelect,
+  useAppDispatch,
+  useAppSelector,
+} from 'app/store';
 
 interface Props {
   location: ICity;
@@ -97,27 +100,29 @@ export const LocationSelector = ({ location }: Props): JSX.Element => {
             <CloseIcon />
           </IconButton>
           Выберите город
-          {currentLocation ? (
-            <FormControl variant="standard">
-              <InputLabel id="demo-simple-select-standard-label">
-                Регион
-              </InputLabel>
-              <Select<number>
-                value={currentRegionId}
-                label="Регион"
-                onChange={handleRegionChange}
-              >
-                {regions &&
-                  regions.map(region => (
-                    <MenuItem key={region.id} value={region.id}>
-                      {region.name}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
-          ) : null}
         </DialogTitle>
         <DialogContent dividers>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+            {currentLocation ? (
+              <FormControl variant="standard" sx={{ width: '100%' }}>
+                <InputLabel id="demo-simple-select-standard-label">
+                  Регион
+                </InputLabel>
+                <Select<number>
+                  value={currentRegionId}
+                  label="Регион"
+                  onChange={handleRegionChange}
+                >
+                  {regions &&
+                    regions.map(region => (
+                      <MenuItem key={region.id} value={region.id}>
+                        {region.name}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            ) : null}
+          </Box>
           <LocationsList dense>
             {filteredCities.map(city => (
               <LocationListItem

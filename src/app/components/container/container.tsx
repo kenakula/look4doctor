@@ -1,14 +1,23 @@
-import { Container as ContianerComponent, SxProps } from '@mui/material';
+import {
+  Breakpoint,
+  Container as ContianerComponent,
+  SxProps,
+} from '@mui/material';
 import React from 'react';
 
 interface Props {
   children: React.ReactNode;
   styles?: SxProps;
+  maxWidth?: Breakpoint;
 }
 
-export const Container = ({ children, styles }: Props): JSX.Element => {
+export const Container = ({
+  children,
+  styles,
+  maxWidth = 'xl',
+}: Props): JSX.Element => {
   return (
-    <ContianerComponent maxWidth="xl" sx={styles}>
+    <ContianerComponent maxWidth={maxWidth} sx={styles}>
       {children}
     </ContianerComponent>
   );

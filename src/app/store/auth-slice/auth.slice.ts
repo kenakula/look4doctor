@@ -49,6 +49,7 @@ export const authSlice = createSlice({
       })
       .addCase(logIn.rejected, (state, { payload }) => {
         state.authenticated = false;
+        state.authProcessing = false;
         state.authError = payload as string;
       });
     // signup

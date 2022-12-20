@@ -1,24 +1,21 @@
 import { useEffect } from 'react';
-import { ErrorBoundary, Loader } from './components';
+import { TechnicalIssues, Loader } from './components';
 import { useLocation } from './hooks';
 import { RouterComponent } from './router';
 import {
   checkAuth,
   refreshAuth,
-  ThemeStoreProvider,
-  useAppDispatch,
-} from './store';
-import {
-  useGetSettingsQuery,
-  useGetSpecialtiesQuery,
-} from './store/assets-slice';
-import { useGetCitiesQuery, useGetRegionsQuery } from './store/location-slice';
-import {
   setCities,
   setCurrentLocationFromGeo,
   setCurrentLocationFromStorage,
   setRegions,
-} from './store/location-slice/location.slice';
+  ThemeStoreProvider,
+  useAppDispatch,
+  useGetCitiesQuery,
+  useGetRegionsQuery,
+  useGetSettingsQuery,
+  useGetSpecialtiesQuery,
+} from './store';
 
 export const App = (): JSX.Element => {
   const { isLoading: settingsLoading, isError: settingsError } =
@@ -67,7 +64,7 @@ export const App = (): JSX.Element => {
   }
 
   if (settingsError || specialtiesError) {
-    return <ErrorBoundary text="Что-то пошло не так, попробуйте позже" />;
+    return <TechnicalIssues text="Что-то пошло не так" />;
   }
 
   return (
