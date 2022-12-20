@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import { Container, Header } from 'app/components';
+import { Container, Header, Toaster } from 'app/components';
 import { useRefreshToken } from 'app/hooks';
 
 export const Layout = (): JSX.Element => {
@@ -14,6 +14,7 @@ export const Layout = (): JSX.Element => {
           <Outlet />
         </Container>
       </Box>
+      <Toaster />
     </>
   );
 };

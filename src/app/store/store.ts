@@ -1,17 +1,18 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { assetsApi } from './assets-slice/assets.api';
-import { authReducer } from './auth-slice/auth.slice';
-import { locationApi } from './location-slice';
-import { locationReducer } from './location-slice/location.slice';
+import { assetsApi } from './assets-slice';
+import { authReducer } from './auth-slice';
+import { locationApi, locationReducer } from './location-slice';
+import { toasterReducer } from './toaster-slice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    [assetsApi.reducerPath]: assetsApi.reducer,
     location: locationReducer,
+    toaster: toasterReducer,
     [locationApi.reducerPath]: locationApi.reducer,
+    [assetsApi.reducerPath]: assetsApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(assetsApi.middleware, locationApi.middleware),

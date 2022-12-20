@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BASE_DIRECTUS_COLLECTIONS_PATH } from 'app/shared/assets';
 import { ICity, IRegion } from 'app/shared/types';
-import { BASE_DIRECTUST_COLLECTIONS_PATH } from '../assets';
 import { ApiResponse } from '../types';
 
 export const locationApi = createApi({
   reducerPath: 'locationApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: BASE_DIRECTUST_COLLECTIONS_PATH,
+    baseUrl: BASE_DIRECTUS_COLLECTIONS_PATH,
   }),
   endpoints: builder => ({
     getCities: builder.query<ICity[], string | null>({

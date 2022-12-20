@@ -6,12 +6,11 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  Drawer,
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { HeaderMenu } from 'app/shared/types';
-
-const drawerWidth = 240;
+import { HOME_PAGE } from 'app/router';
+import { CustomDrawer } from './custom-components';
 
 interface Props {
   handleDrawerToggle: () => void;
@@ -24,20 +23,21 @@ export const DrawerComponent = ({
   menuLinks,
   openState,
 }: Props): JSX.Element => {
+  const listItemStyles = {
+    textAlign: 'center',
+    '&.active': {
+      pointerEvents: 'none',
+      opacity: 0.3,
+    },
+  };
+
   return (
-    <Drawer
+    <CustomDrawer
       variant="temporary"
       open={openState}
       onClose={handleDrawerToggle}
       ModalProps={{
         keepMounted: true,
-      }}
-      sx={{
-        display: { xs: 'block', md: 'none' },
-        '& .MuiDrawer-paper': {
-          boxSizing: 'border-box',
-          width: drawerWidth,
-        },
       }}
     >
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -46,19 +46,22 @@ export const DrawerComponent = ({
         </Typography>
         <Divider />
         <List>
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={listItemStyles}
+              component={NavLink}
+              to={HOME_PAGE}
+            >
+              <ListItemText primary="Главная" />
+            </ListItemButton>
+          </ListItem>
           {menuLinks &&
             menuLinks
               .filter(({ show_on_page }) => show_on_page)
               .map(({ name, url }) => (
                 <ListItem key={url} disablePadding>
                   <ListItemButton
-                    sx={{
-                      textAlign: 'center',
-                      '&.active': {
-                        pointerEvents: 'none',
-                        opacity: 0.3,
-                      },
-                    }}
+                    sx={listItemStyles}
                     component={NavLink}
                     to={`/${url}`}
                   >
@@ -68,6 +71,6 @@ export const DrawerComponent = ({
               ))}
         </List>
       </Box>
-    </Drawer>
+    </CustomDrawer>
   );
 };

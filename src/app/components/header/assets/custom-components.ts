@@ -2,12 +2,24 @@ import {
   Box,
   Button,
   Dialog,
+  Drawer,
   IconButton,
   List,
   ListItem,
   MenuItem,
   styled,
 } from '@mui/material';
+
+const DRAWER_WIDTH = 240;
+
+export const MainNavList = styled(List)(({ theme }) => ({
+  display: 'none',
+  marginLeft: 'auto',
+  alignItems: 'center',
+  [theme.breakpoints.up('md')]: {
+    display: 'flex',
+  },
+}));
 
 export const BurgerButton = styled(IconButton, { label: 'burger-toggler' })(
   ({ theme }) => ({
@@ -116,5 +128,15 @@ export const LocationListItem = styled(ListItem, {
   '& .MuiListItemIcon-root': {
     display: current ? undefined : 'none',
     color: theme.palette.primary.main,
+  },
+}));
+
+export const CustomDrawer = styled(Drawer)(({ theme }) => ({
+  '& .MuiDrawer-paper': {
+    boxSizing: 'border-box',
+    width: DRAWER_WIDTH,
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
   },
 }));
