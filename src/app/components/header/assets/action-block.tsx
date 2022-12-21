@@ -1,4 +1,4 @@
-import { Button, Link } from '@mui/material';
+import { Button, Link, Box } from '@mui/material';
 import { ActionButtons } from 'app/shared/types';
 import { ActionBlockWrapper } from './custom-components';
 
