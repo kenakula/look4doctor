@@ -34,6 +34,30 @@ export const ThemeStoreProvider = ({ children }: Props): JSX.Element => {
   const theme = useMemo(
     () =>
       createTheme({
+        // typography: {
+        //   fontFamily: 'Comfortaa',
+        // },
+        // components: {
+        //   MuiCssBaseline: {
+        //     styleOverrides: `
+        //       @font-face {
+        //         font-family: 'Comfortaa';
+        //         font-style: normal;
+        //         font-weight: 700;
+        //         font-display: swap;
+        //         src: local('Comfortaa'), url(${Comfortaa}) format('woff2');
+        //       }
+        //     `,
+        //   },
+        // },
+        // breakpoints: {
+        //   values: {
+        //     mobile: 0,
+        //     tablet: 768,
+        //     laptop: 1024,
+        //     desktop: 1200,
+        //   },
+        // },
         palette: {
           mode,
           primary: {

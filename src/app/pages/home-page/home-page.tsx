@@ -4,7 +4,9 @@ import { RegionSelect } from 'app/components';
 export const HomePage = (): JSX.Element => {
   return (
     <>
-      <Typography variant="h1">Home page</Typography>
+      <Typography variant="h1" color="success.light">
+        Home page
+      </Typography>
       <RegionSelect />
     </>
   );

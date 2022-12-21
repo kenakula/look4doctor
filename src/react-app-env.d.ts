@@ -70,3 +70,20 @@ declare module '*.module.sass' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
+
+declare module '*.woff';
+declare module '*.woff2';
+
+// declare module '@mui/material/styles' {
+//   interface BreakpointOverrides {
+//     xs: false; // removes the `xs` breakpoint
+//     sm: false;
+//     md: false;
+//     lg: false;
+//     xl: false;
+//     mobile: true; // adds the `mobile` breakpoint
+//     tablet: true;
+//     laptop: true;
+//     desktop: true;
+//   }
+// }

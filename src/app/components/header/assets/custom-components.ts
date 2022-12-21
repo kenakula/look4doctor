@@ -4,8 +4,10 @@ import {
   Dialog,
   Drawer,
   IconButton,
+  Link,
   List,
   ListItem,
+  ListItemButton,
   MenuItem,
   styled,
 } from '@mui/material';
@@ -20,6 +22,43 @@ export const MainNavList = styled(List)(({ theme }) => ({
     display: 'flex',
   },
 }));
+
+export const MainNavLink = styled(Link)({
+  position: 'relative',
+  fontSize: 14,
+  textDecoration: 'none',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    bottom: -7,
+    left: 0,
+    display: 'none',
+    width: '100%',
+    height: 3,
+    background: '#ffffff',
+  },
+  '&.active': {
+    fontWeight: 700,
+    '&::before': {
+      display: 'block',
+    },
+  },
+}) as typeof Link;
+
+export const MenuItemLink = styled(MenuItem)({
+  '&.active': {
+    pointerEvents: 'none',
+    opacity: 0.3,
+  },
+}) as typeof MenuItem;
+
+export const ListItemLink = styled(ListItemButton)({
+  textAlign: 'center',
+  '&.active': {
+    pointerEvents: 'none',
+    opacity: 0.3,
+  },
+}) as typeof ListItemButton;
 
 export const BurgerButton = styled(IconButton, { label: 'burger-toggler' })(
   ({ theme }) => ({
