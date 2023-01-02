@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-boolean-value */
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, styled, TextField } from '@mui/material';
 import { ICity } from 'app/shared/types';
 import {
   setCurrentLocationFromSelect,
@@ -7,6 +7,10 @@ import {
   useAppSelector,
 } from 'app/store';
 import { SyntheticEvent } from 'react';
+
+const CustomAutocomplete = styled(Autocomplete)({
+  '& .MuiAutocomplete-clearIndicator': { display: 'none' },
+}) as typeof Autocomplete;
 
 export const RegionSelect = (): JSX.Element | null => {
   const { cities } = useAppSelector(state => state.location);
@@ -22,11 +26,7 @@ export const RegionSelect = (): JSX.Element | null => {
   };
 
   return (
-    <Autocomplete<ICity>
-      sx={{
-        '& .MuiAutocomplete-clearIndicator': { display: 'none' },
-        width: 300,
-      }}
+    <CustomAutocomplete<ICity>
       disablePortal
       options={cities && cities.length ? cities : []}
       renderInput={params => <TextField {...params} label="Ваш город" />}

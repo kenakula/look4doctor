@@ -1,13 +1,32 @@
-import { Typography } from '@mui/material';
-import { RegionSelect } from 'app/components';
+import { TopBanner } from 'app/components';
+import { useAppDispatch, getHomePageData, useAppSelector } from 'app/store';
+import { useEffect } from 'react';
+import { SearchBox } from './blocks/search-box';
+
+const usePageDataFetch = (): void => {
+  let dataFetched = false;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!dataFetched) {
+      dispatch(getHomePageData());
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      dataFetched = true;
+    }
+  }, [dispatch]);
+};
 
 export const HomePage = (): JSX.Element => {
+  usePageDataFetch();
+  const { homePage } = useAppSelector(state => state.pages);
+
   return (
     <>
-      <Typography variant="h1" color="success.light">
-        Home page
-      </Typography>
-      <RegionSelect />
+      <TopBanner
+        title={homePage?.banner_title}
+        imageId={homePage?.banner_image}
+      />
+      <SearchBox />
     </>
   );
 };

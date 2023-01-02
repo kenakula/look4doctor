@@ -4,6 +4,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { assetsApi } from './assets-slice';
 import { authReducer } from './auth-slice';
 import { locationApi, locationReducer } from './location-slice';
+import { pagesReducer } from './pages-slice';
 import { toasterReducer } from './toaster-slice';
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: authReducer,
     location: locationReducer,
     toaster: toasterReducer,
+    pages: pagesReducer,
     [locationApi.reducerPath]: locationApi.reducer,
     [assetsApi.reducerPath]: assetsApi.reducer,
   },
