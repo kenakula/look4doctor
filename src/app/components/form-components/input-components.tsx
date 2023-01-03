@@ -6,7 +6,7 @@ import {
   Path,
   UnPackAsyncDefaultValues,
 } from 'react-hook-form';
-import { CustomInput } from './assets/custom-components';
+import { CustomInput } from './assets';
 
 interface Props<T extends FieldValues> {
   formControl: Control<T, any>;

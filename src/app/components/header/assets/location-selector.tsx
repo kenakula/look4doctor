@@ -1,34 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
-  DialogContent,
-  DialogTitle,
   FormControl,
-  IconButton,
   InputLabel,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   MenuItem,
   Select,
-  SelectChangeEvent,
 } from '@mui/material';
 import NearMeIcon from '@mui/icons-material/NearMe';
 import { ICity } from 'app/shared/types';
 import {
   LocationButton,
-  LocationDialog,
   LocationListItem,
   LocationsList,
 } from './custom-components';
-import { grey } from '@mui/material/colors';
-import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import {
   setCurrentLocationFromSelect,
   useAppDispatch,
   useAppSelector,
 } from 'app/store';
+import { ModalDialog } from 'app/components/modal-dialog/modal-dialog';
+import { useCurrentRegion } from '../hooks';
 
 interface Props {
   location: ICity;
@@ -40,17 +35,8 @@ export const LocationSelector = ({ location }: Props): JSX.Element => {
   const { cities, regions, currentLocation } = useAppSelector(
     state => state.location,
   );
-  const [currentRegionId, setCurrentRegionId] = useState<number>();
-  const [filteredCities, setFilteredCities] = useState<ICity[]>(cities ?? []);
-
-  useEffect(() => {
-    if (currentLocation && cities) {
-      setCurrentRegionId(currentLocation.region.id);
-      setFilteredCities(
-        cities.filter(({ region: { id } }) => id === currentLocation.region.id),
-      );
-    }
-  }, [currentLocation, cities]);
+  const { currentRegionId, filteredCities, handleRegionChange } =
+    useCurrentRegion(cities, currentLocation);
 
   const handleModalClose = (): void => {
     setModalOpenState(false);
@@ -58,16 +44,6 @@ export const LocationSelector = ({ location }: Props): JSX.Element => {
 
   const handleModalOpen = (): void => {
     setModalOpenState(true);
-  };
-
-  const handleRegionChange = (event: SelectChangeEvent<number>): void => {
-    setCurrentRegionId(+event.target.value);
-
-    if (cities) {
-      setFilteredCities(
-        cities.filter(({ region: { id } }) => id === +event.target.value),
-      );
-    }
   };
 
   const handleClickCity = (city: ICity): void => {
@@ -85,23 +61,13 @@ export const LocationSelector = ({ location }: Props): JSX.Element => {
       >
         {location.name}
       </LocationButton>
-      <LocationDialog open={modalOpenState} onClose={handleModalClose}>
-        <DialogTitle>
-          <IconButton
-            aria-label="close"
-            onClick={handleModalClose}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              color: grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-          Выберите город
-        </DialogTitle>
-        <DialogContent dividers>
+      <ModalDialog
+        openState={modalOpenState}
+        handleClose={handleModalClose}
+        dialogTitle="Выберите город"
+        maxWidth="sm"
+      >
+        <Box>
           <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
             {currentLocation ? (
               <FormControl variant="standard" sx={{ width: '100%' }}>
@@ -138,8 +104,8 @@ export const LocationSelector = ({ location }: Props): JSX.Element => {
               </LocationListItem>
             ))}
           </LocationsList>
-        </DialogContent>
-      </LocationDialog>
+        </Box>
+      </ModalDialog>
     </Box>
   );
 };

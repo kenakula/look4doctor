@@ -1,7 +1,7 @@
 import { TopBanner } from 'app/components';
 import { useAppDispatch, getHomePageData, useAppSelector } from 'app/store';
 import { useEffect } from 'react';
-import { SearchBox } from './blocks/search-box';
+import { SearchBox } from './blocks';
 
 const usePageDataFetch = (): void => {
   let dataFetched = false;

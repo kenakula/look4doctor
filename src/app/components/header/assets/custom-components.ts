@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Dialog,
   Drawer,
   IconButton,
   Link,
@@ -134,22 +133,6 @@ export const LocationButton = styled(Button, { label: 'location-button' })({
     height: 15,
   },
 });
-
-export const LocationDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
-  },
-  '& .MuiPaper-root': {
-    width: '100%',
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
-  '& .MuiDialogTitle-root': {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-}));
 
 export const LocationsList = styled(List)(({ theme }) => ({
   display: 'grid',

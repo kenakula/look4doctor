@@ -29,11 +29,12 @@ export const RegionSelect = (): JSX.Element | null => {
     <CustomAutocomplete<ICity>
       disablePortal
       options={cities && cities.length ? cities : []}
-      renderInput={params => <TextField {...params} label="Ваш город" />}
+      renderInput={params => <TextField {...params} label="Выберите город" />}
       getOptionLabel={({ name }) => name}
       onChange={changeHandler}
       value={currentLocation}
       isOptionEqualToValue={(option, value) => option.id === value.id}
+      noOptionsText="Не найдено"
     />
   );
 };

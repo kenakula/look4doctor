@@ -9,3 +9,4 @@ export * from './avatar/avatar';
 export * from './region-select/region-select';
 export * from './toaster/toaster';
 export * from './top-banner/top-banner';
+export * from './modal-dialog/modal-dialog';
