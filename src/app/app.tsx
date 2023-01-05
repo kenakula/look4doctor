@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { TechnicalIssues, Loader } from './components';
 import { useLocation } from './hooks';
 import { RouterComponent } from './router';
@@ -68,9 +69,11 @@ export const App = (): JSX.Element => {
   }
 
   return (
-    <ThemeStoreProvider>
-      <RouterComponent />
-    </ThemeStoreProvider>
+    <HelmetProvider>
+      <ThemeStoreProvider>
+        <RouterComponent />
+      </ThemeStoreProvider>
+    </HelmetProvider>
   );
 };
 

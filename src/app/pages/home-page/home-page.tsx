@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { Container, Testimonials, TopBanner } from 'app/components';
+import { Container, PageSeo, Testimonials, TopBanner } from 'app/components';
 import { useAppDispatch, getHomePageData, useAppSelector } from 'app/store';
 import { useEffect } from 'react';
 import { SearchBox } from './blocks';
@@ -26,6 +26,13 @@ export const HomePage = (): JSX.Element => {
 
   return (
     <>
+      <PageSeo
+        title="title"
+        description="description"
+        url="https://look4doctor.ru"
+        image="image.jpg"
+        type="website"
+      />
       <TopBanner
         title={homePage?.banner_title}
         imageId={homePage?.banner_image}
