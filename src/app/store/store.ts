@@ -5,6 +5,7 @@ import { assetsApi } from './assets-slice';
 import { authReducer } from './auth-slice';
 import { locationApi, locationReducer } from './location-slice';
 import { pagesReducer } from './pages-slice';
+import { testimonialsApi } from './testimonials-slice';
 import { toasterReducer } from './toaster-slice';
 
 export const store = configureStore({
@@ -15,9 +16,14 @@ export const store = configureStore({
     pages: pagesReducer,
     [locationApi.reducerPath]: locationApi.reducer,
     [assetsApi.reducerPath]: assetsApi.reducer,
+    [testimonialsApi.reducerPath]: testimonialsApi.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(assetsApi.middleware, locationApi.middleware),
+    getDefaultMiddleware().concat(
+      assetsApi.middleware,
+      locationApi.middleware,
+      testimonialsApi.middleware,
+    ),
 });
 
 setupListeners(store.dispatch);

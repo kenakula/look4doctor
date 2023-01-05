@@ -1,4 +1,5 @@
-import { TopBanner } from 'app/components';
+import { Box } from '@mui/material';
+import { Container, Testimonials, TopBanner } from 'app/components';
 import { useAppDispatch, getHomePageData, useAppSelector } from 'app/store';
 import { useEffect } from 'react';
 import { SearchBox } from './blocks';
@@ -16,6 +17,9 @@ const usePageDataFetch = (): void => {
   }, [dispatch]);
 };
 
+// TODO оборачивать блоки в контейнер тут
+// TODO вынести компонент section
+
 export const HomePage = (): JSX.Element => {
   usePageDataFetch();
   const { homePage } = useAppSelector(state => state.pages);
@@ -27,6 +31,11 @@ export const HomePage = (): JSX.Element => {
         imageId={homePage?.banner_image}
       />
       <SearchBox />
+      <Box component="section" sx={{ py: 4 }}>
+        <Container maxWidth="md">
+          <Testimonials type="app" title="Отзывы о нашем сервисе" />
+        </Container>
+      </Box>
     </>
   );
 };

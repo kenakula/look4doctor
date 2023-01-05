@@ -10,3 +10,5 @@ export * from './region-select/region-select';
 export * from './toaster/toaster';
 export * from './top-banner/top-banner';
 export * from './modal-dialog/modal-dialog';
+export * from './testimonials/testimonials';
+export * from './page-title/page-title';

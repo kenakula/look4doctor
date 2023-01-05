@@ -6,6 +6,7 @@ import { IHomePage } from 'app/shared/types';
 import { axiosInstance } from '../assets';
 import { ApiResponse } from '../types';
 
+// TODO сделать api
 export const getHomePageData = createAsyncThunk(
   'pages/home',
   async (_, thunkApi) => {

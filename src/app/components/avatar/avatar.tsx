@@ -1,14 +1,11 @@
 import { Avatar as AvatarComponent } from '@mui/material';
 import { IUser } from 'app/shared/types';
 import {
-  BASE_DIRECTUS_ASSETS_URL,
   getAvatarLetters,
+  getAvatarSrc,
   getUserColorString,
 } from 'app/shared/assets';
 import { useCustomTheme } from 'app/store';
-
-const THUMB_WIDTH = 200;
-const THUMB_HEIGHT = 200;
 
 interface Props {
   user: IUser | null;
@@ -22,11 +19,8 @@ export const Avatar = ({
   size,
 }: Props): JSX.Element => {
   const { theme } = useCustomTheme();
-  const urlParams = `width=${THUMB_WIDTH}&height=${THUMB_HEIGHT}`;
   const avatarSrc =
-    user && user.avatar
-      ? `${BASE_DIRECTUS_ASSETS_URL}/${user.avatar}/avatar.jpg?${urlParams}`
-      : undefined;
+    user && user.avatar ? getAvatarSrc(100, user.avatar) : undefined;
 
   return (
     <AvatarComponent

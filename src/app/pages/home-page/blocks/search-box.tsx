@@ -22,10 +22,10 @@ export const SearchBox = (): JSX.Element => {
   };
 
   return (
-    <Box component="section">
+    <Box component="section" sx={{ py: 4 }}>
       <Container maxWidth="md">
         <Typography color="grey.500" sx={{ mb: 2 }}>
-          Поиск по всем категориям: врачи, клиники, услуги
+          Поиск по всем категориям: врачи, клиники, услуги, страховки
         </Typography>
         <SearchContainer>
           <RegionSelect />
