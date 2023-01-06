@@ -1,48 +1,28 @@
-import { Box } from '@mui/material';
-import { Container, PageSeo, Testimonials, TopBanner } from 'app/components';
-import { useAppDispatch, getHomePageData, useAppSelector } from 'app/store';
-import { useEffect } from 'react';
+import { Seo, Section, Testimonials, TopBanner } from 'app/components';
+import { useGetHomePageDataQuery } from 'app/store';
 import { SearchBox } from './blocks';
 
-const usePageDataFetch = (): void => {
-  let dataFetched = false;
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (!dataFetched) {
-      dispatch(getHomePageData());
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      dataFetched = true;
-    }
-  }, [dispatch]);
-};
-
-// TODO оборачивать блоки в контейнер тут
-// TODO вынести компонент section
-
 export const HomePage = (): JSX.Element => {
-  usePageDataFetch();
-  const { homePage } = useAppSelector(state => state.pages);
+  const { data } = useGetHomePageDataQuery();
 
   return (
     <>
-      <PageSeo
-        title="title"
-        description="description"
-        url="https://look4doctor.ru"
-        image="image.jpg"
-        type="website"
-      />
-      <TopBanner
-        title={homePage?.banner_title}
-        imageId={homePage?.banner_image}
-      />
-      <SearchBox />
-      <Box component="section" sx={{ py: 4 }}>
-        <Container maxWidth="md">
-          <Testimonials type="app" title="Отзывы о нашем сервисе" />
-        </Container>
-      </Box>
+      {data && (
+        <Seo
+          title={data.page_title}
+          description={data.page_description}
+          url={data.page_url}
+          image={data.page_image}
+          type={data.page_type}
+        />
+      )}
+      <TopBanner title={data?.banner_title} imageId={data?.banner_image} />
+      <Section>
+        <SearchBox />
+      </Section>
+      <Section>
+        <Testimonials type="app" title="Отзывы о нашем сервисе" />
+      </Section>
     </>
   );
 };

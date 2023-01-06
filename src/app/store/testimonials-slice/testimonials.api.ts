@@ -9,7 +9,7 @@ export const testimonialsApi = createApi({
     baseUrl: BASE_DIRECTUS_COLLECTIONS_PATH,
   }),
   endpoints: builder => ({
-    getAllTestimonials: builder.query<ITestimonial[], null>({
+    getAllTestimonials: builder.query<ITestimonial[], void>({
       query: () => ({
         url: 'testimonials',
         params: { fields: '*.*' },

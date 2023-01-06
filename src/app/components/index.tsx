@@ -13,3 +13,5 @@ export * from './modal-dialog/modal-dialog';
 export * from './testimonials/testimonials';
 export * from './page-title/page-title';
 export * from './seo/seo';
+export * from './section/section';
+export * from './slider/slider';

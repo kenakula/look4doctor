@@ -1,6 +1,5 @@
 import { PaletteMode } from '@mui/material';
 import { IUser } from '../types';
-import { BASE_DIRECTUS_ASSETS_URL } from './directus-constants';
 
 export const DEFAULT_AVATAR = 'a693eeb7-5e9e-45c7-b309-b3a780797150';
 
@@ -80,12 +79,4 @@ export const getAvatarLetters = (user: IUser | null): string => {
     .join('');
 
   return str;
-};
-
-export const getAvatarSrc = (thumbWidth: number, path?: string): string => {
-  const urlParams = `width=${thumbWidth}&height=${thumbWidth}`;
-
-  return `${BASE_DIRECTUS_ASSETS_URL}/${
-    path ?? DEFAULT_AVATAR
-  }/avatar.jpg?${urlParams}`;
 };

@@ -9,11 +9,11 @@ export const assetsApi = createApi({
     baseUrl: BASE_DIRECTUS_COLLECTIONS_PATH,
   }),
   endpoints: builder => ({
-    getSettings: builder.query<ISettings, null>({
+    getSettings: builder.query<ISettings, void>({
       query: () => 'settings',
       transformResponse: (response: ApiResponse<ISettings>) => response.data,
     }),
-    getSpecialties: builder.query<ISpecialty[], null>({
+    getSpecialties: builder.query<ISpecialty[], void>({
       query: () => 'specialties',
       transformResponse: (response: ApiResponse<ISpecialty[]>) => response.data,
     }),

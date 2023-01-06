@@ -4,7 +4,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { assetsApi } from './assets-slice';
 import { authReducer } from './auth-slice';
 import { locationApi, locationReducer } from './location-slice';
-import { pagesReducer } from './pages-slice';
+import { pagesApi } from './pages-slice/pages.api';
 import { testimonialsApi } from './testimonials-slice';
 import { toasterReducer } from './toaster-slice';
 
@@ -13,7 +13,7 @@ export const store = configureStore({
     auth: authReducer,
     location: locationReducer,
     toaster: toasterReducer,
-    pages: pagesReducer,
+    [pagesApi.reducerPath]: pagesApi.reducer,
     [locationApi.reducerPath]: locationApi.reducer,
     [assetsApi.reducerPath]: assetsApi.reducer,
     [testimonialsApi.reducerPath]: testimonialsApi.reducer,
@@ -23,6 +23,7 @@ export const store = configureStore({
       assetsApi.middleware,
       locationApi.middleware,
       testimonialsApi.middleware,
+      pagesApi.middleware,
     ),
 });
 

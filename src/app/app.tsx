@@ -20,11 +20,9 @@ import {
 
 export const App = (): JSX.Element => {
   const { isLoading: settingsLoading, isError: settingsError } =
-    useGetSettingsQuery(null, {
-      refetchOnFocus: false,
-    });
+    useGetSettingsQuery();
   const { isLoading: specialtiesLoading, isError: specialtiesError } =
-    useGetSpecialtiesQuery(null, { refetchOnFocus: false });
+    useGetSpecialtiesQuery();
   const { data: cities } = useGetCitiesQuery(null, { refetchOnFocus: false });
   const { data: regions } = useGetRegionsQuery('', { refetchOnFocus: false });
 

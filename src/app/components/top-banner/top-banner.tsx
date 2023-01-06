@@ -1,5 +1,5 @@
 import { Box, styled, Typography } from '@mui/material';
-import { BASE_DIRECTUS_ASSETS_URL } from 'app/shared/assets';
+import { getImageLink } from 'app/shared/assets';
 import { Container } from '../container/container';
 
 const BannerContainer = styled(Box, {
@@ -58,13 +58,12 @@ interface Props {
 }
 
 export const TopBanner = ({ title, imageId }: Props): JSX.Element => {
-  const topBannerImagePath = `${BASE_DIRECTUS_ASSETS_URL}/${imageId}/top-banner.jpg`;
+  const topBannerImagePath = imageId
+    ? getImageLink(imageId, 'top-banner.jpg')
+    : undefined;
 
   return (
-    <BannerContainer
-      component="section"
-      image={imageId ? topBannerImagePath : undefined}
-    >
+    <BannerContainer component="section" image={topBannerImagePath}>
       <Container>
         {title && (
           <Typography

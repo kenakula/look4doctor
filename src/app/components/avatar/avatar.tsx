@@ -2,10 +2,12 @@ import { Avatar as AvatarComponent } from '@mui/material';
 import { IUser } from 'app/shared/types';
 import {
   getAvatarLetters,
-  getAvatarSrc,
+  getImageLink,
   getUserColorString,
 } from 'app/shared/assets';
 import { useCustomTheme } from 'app/store';
+
+const DEFAULT_IMAGE_SIZE = 80;
 
 interface Props {
   user: IUser | null;
@@ -19,8 +21,13 @@ export const Avatar = ({
   size,
 }: Props): JSX.Element => {
   const { theme } = useCustomTheme();
+  const avatarDiameter = size ?? DEFAULT_IMAGE_SIZE;
   const avatarSrc =
-    user && user.avatar ? getAvatarSrc(100, user.avatar) : undefined;
+    user && user.avatar
+      ? getImageLink(user.avatar, 'user-avatar.jpg', {
+          sizes: { width: avatarDiameter, height: avatarDiameter },
+        })
+      : undefined;
 
   return (
     <AvatarComponent

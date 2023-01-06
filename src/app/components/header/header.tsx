@@ -29,9 +29,7 @@ import {
 export const Header = (): JSX.Element => {
   const { authenticated, user } = useAppSelector(state => state.auth);
   const { currentLocation } = useAppSelector(state => state.location);
-  const { data } = useGetSettingsQuery(null, {
-    refetchOnFocus: false,
-  });
+  const { data } = useGetSettingsQuery();
   const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
   const dispatch = useAppDispatch();

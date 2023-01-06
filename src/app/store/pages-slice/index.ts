@@ -1,2 +1,1 @@
-export * from './pages.slice';
-export * from './pages.thunks';
+export * from './pages.api';

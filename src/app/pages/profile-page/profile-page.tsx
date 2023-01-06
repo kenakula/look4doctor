@@ -1,21 +1,24 @@
 import { Avatar, Box } from '@mui/material';
-import { BASE_DIRECTUS_ASSETS_URL } from 'app/shared/assets';
+import { getImageLink } from 'app/shared/assets';
 import { useAppSelector } from 'app/store';
 
-const AVATAR_WIDTH = 500;
-const AVATAR_HEIGHT = 500;
+const AVATAR_SIZE = 200;
 
 export const ProfilePage = (): JSX.Element => {
   const { user } = useAppSelector(state => state.auth);
-  const urlParams = `width=${AVATAR_WIDTH}&height=${AVATAR_HEIGHT}`;
   const avatarSrc =
     user && user.avatar
-      ? `${BASE_DIRECTUS_ASSETS_URL}/${user.avatar}/avatar.jpg?${urlParams}`
+      ? getImageLink(user.avatar, 'avatar.jpg', {
+          sizes: { width: AVATAR_SIZE, height: AVATAR_SIZE },
+        })
       : undefined;
 
   return (
     <Box>
-      <Avatar sx={{ width: 400, height: 400 }} src={avatarSrc} />
+      <Avatar
+        sx={{ width: AVATAR_SIZE, height: AVATAR_SIZE }}
+        src={avatarSrc}
+      />
     </Box>
   );
 };
