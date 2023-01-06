@@ -22,18 +22,23 @@ export const Seo = ({
   return (
     <Helmet>
       <html lang="ru" />
-      <meta name="title" content={title} />
+      <title>{title}</title>
       <meta name="description" content={description} />
-      <meta property="og:type" content={type} />
+
+      <meta itemProp="name" content={title} />
+      <meta itemProp="description" content={description} />
+      <meta itemProp="image" content={pageSeoImage} />
+
       <meta property="og:url" content={url} />
+      <meta property="og:type" content={type} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={pageSeoImage} />
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={url} />
-      <meta property="twitter:title" content={title} />
-      <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={pageSeoImage} />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={pageSeoImage} />
     </Helmet>
   );
 };
